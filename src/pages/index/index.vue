@@ -1,8 +1,6 @@
 <template>
     <div class="index-section page">
-        <Header :showBg="false">
-            <div>第八届互联网+大学生创新创业大赛</div>
-        </Header>
+        <Header title="第八届互联网+大学生创新创业大赛" :hasClose="false"></Header>
         <div class="scroll">
             <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
                 <van-swipe-item>1</van-swipe-item>
@@ -13,11 +11,11 @@
             <div class="btnGroup">
                 <div class="btnContent">
                     互联网+大学生创新创业大赛
-                    <div class="btn">立即报名</div>
+                    <div class="btn" @click="gotoChild(1)">立即报名</div>
                 </div>
                 <div class="btnContent">
                     对接洽谈活动投资机构人员报名
-                    <div class="btn" @click="gotoChild">立即报名</div>
+                    <div class="btn" @click="gotoChild(2)">立即报名</div>
                 </div>
             </div>
             <div class="subTitle">大赛介绍</div>
@@ -36,20 +34,29 @@ export default {
     },
     data() {
         return {
-            
+
         }
     },
     computed: {
-        
+
     },
     activated() {
-        
+
 
     },
     methods: {
-        gotoChild(){
+        gotoChild(index){
+            // this.$router.push({
+            //     path:"/loginPage"
+            // })
+            let path = ''
+            if (index == 1) {
+                path = "/pioneerGame"
+            }else {
+                path = "/entryInfo"
+            }
             this.$router.push({
-                path:"/"
+                path: path
             })
         }
     }

@@ -1,8 +1,6 @@
 <template>
-    <div class="newsList">
-        <Header :showBg="false">
-            <div>赛事咨询</div>
-        </Header>
+    <div class="newsList page">
+        <Header :hasClose="false" title="赛事咨询"></Header>
         <div class="scroll">
             <div class="subTitle"></div>
             <div class="newList">

@@ -7,8 +7,8 @@
             </keep-alive>
             <!-- </transition> -->
         </div>
-        <van-tabbar 
-            class="tab-bar" 
+        <van-tabbar
+            class="tab-bar"
             v-model="$store.state.home.active"
             @change="tabChange"
         >
@@ -43,11 +43,13 @@ export default {
     components: {},
     data() {
         return {
-            
+
         }
     },
+    mounted() {
+    },
     activated(){
-console.log(this)
+        console.log(this.$store.state.home.active)
     },
     methods: {
         tabChange(active){

@@ -1,17 +1,6 @@
 <template>
     <div class="child-section">
-        <Header>
-            <div class="header-content" >
-                <div class="header-title">
-                    子页面
-                </div>
-                <div class="header-back">
-                    <div class="back" @click="handleTitleBack">
-                        <i class="iconfont icon-arrowthin"></i>
-                    </div>
-                </div>
-            </div>
-        </Header>
+        <Header title="子页面"></Header>
     </div>
 </template>
 

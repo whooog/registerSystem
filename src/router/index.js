@@ -16,9 +16,17 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log(from)
-    store.commit("changeTabActive",to.path)
-    next()
+    // console.log(from)
+    let path = to.path
+    if (path == '/') {
+        path = '/home/index'
+        store.commit("changeTabActive",path)
+        next({path: '/home/index'})
+    }else {
+        store.commit("changeTabActive",to.path)
+        next()
+    }
+
 })
 
 export default router

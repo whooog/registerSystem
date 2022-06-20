@@ -1,6 +1,18 @@
 <template>
     <div class="header" :class="{bgImg: showBg}">
         <div class="header-bg">
+            <div class="header-content" >
+                <div class="header-back" v-if="hasClose">
+                    <div class="back" @click="handleTitleBack">
+                        <i class="iconfont icon-arrowthin"></i>
+                    </div>
+                </div>
+                <div class="header-title">
+                    <div class="title">{{title}}</div>
+                </div>
+                <div class="header-right">
+                </div>
+            </div>
             <slot></slot>
         </div>
     </div>
@@ -9,9 +21,25 @@
 <script>
 export default {
     props: {
+        title: {
+            type: [String],
+            default: ''
+        },
         showBg: {
             type: [Boolean],
             default: true
+        },
+        hasClose: {
+            type: [Boolean],
+            default: true
+        }
+    },
+    mounted() {
+
+    },
+    methods: {
+        handleTitleBack(){
+            this.$router.back()
         }
     }
 }
@@ -35,9 +63,9 @@ export default {
             color: #333;
         }
         &.bgImg {
-            background: linear-gradient(to right, #4c2af0,#1269eb);
+            /*background: linear-gradient(to right, #4c2af0,#1269eb);*/
             .header-bg {
-                color: #fff;
+                /*color: #fff;*/
             }
         }
     }

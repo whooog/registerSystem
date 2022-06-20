@@ -33,19 +33,10 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
-    .header-title {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+    display: flex;
+    align-items: center;
     .header-back {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        z-index: 9;
+        height: 15%;
         .back {
             width: 100px;
             height: 100%;
@@ -53,11 +44,27 @@ body {
             justify-content: center;
             align-items: center;
             i {
-                color: #fff;
+                color: #333;
                 font-size: 50px;
                 transform: rotate(180deg);
             }
         }
+    }
+    .header-title {
+        width: 70%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+    .header-right {
+        width: 15%;
+        height: 100%;
     }
 }
 

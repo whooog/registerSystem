@@ -1,8 +1,6 @@
 <template>
 	<div class="mine-section">
-		<Header>
-			<div>丁页</div>
-		</Header>
+		<Header title="丁页"></Header>
 	</div>
 </template>
 
@@ -14,20 +12,20 @@ export default {
 	},
 	data() {
 		return {
-			
+
 		};
 	},
 	mounted() {
-		
+
 	},
 	activated() {
-		
+
 	},
 	methods: {
-		
+
 	},
 	computed: {
-		
+
 	},
 };
 </script>

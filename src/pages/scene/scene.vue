@@ -1,7 +1,6 @@
 <template>
     <div class="scene-section">
-        <Header>
-            <div>丙页</div>
+        <Header title="丙页">
         </Header>
     </div>
 </template>
