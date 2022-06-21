@@ -26,7 +26,7 @@
                     <img v-else src="../../assets/images/tab-task.png" />
                 </template>
             </van-tabbar-item>
-            <van-tabbar-item name="/home/scene">
+            <van-tabbar-item name="/home/pioneerGame">
                 <span>赛事报名</span>
                 <template #icon="props">
                     <img v-if="props.active" src="../../assets/images/tab-scene-active.png" />

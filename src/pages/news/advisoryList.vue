@@ -1,28 +1,18 @@
 <template>
     <div class="newsList page">
-        <Header :hasClose="false" title="赛事咨询"></Header>
+        <Header title="赛事咨询"></Header>
         <div class="scroll">
            <div class="advisory">
                <div class="subTitle">
                    新闻咨询
-                   <div class="more" @click="toAdvisory">more <van-icon name="down" class="icon"/>
-               </div></div>
+               </div>
                <div class="advisoryList">
                    <div class="advisoryItem content" @click="jumpPage(item.newslist_id, 1)" v-for="(item, index) in newslist" :key="index+'a'">
                        <div class="text">{{item.title}}</div>
                    </div>
                </div>
            </div>
-            <div class="guide">
-                <div class="subTitle">赛事指南</div>
-                <div class="guideList">
-                    <div class="guideItem content" @click="jumpPage(item.eventguide_id, 2)" v-for="(item,index) in eventGuideList" :key="index+'b'">
-                        {{item.title}}
-                    </div>
-                </div>
-            </div>
-
-            </div>
+        </div>
     </div>
 </template>
 
@@ -44,19 +34,11 @@
             //
 
             this.getList()
-            this.guideList()
         },
         methods: {
             getList(){
                 this.$httpRequest.post('api/NewsList/index',{}).then(res => {
                    this.newslist = res.data;
-                }).catch(() => {
-
-                })
-            },
-            guideList(){
-                this.$httpRequest.post('api/EventGuide/index',{}).then(res => {
-                    this.eventGuideList = res.data;
                 }).catch(() => {
 
                 })
@@ -71,11 +53,7 @@
                     }
                 })
             },
-            toAdvisory(){
-                this.$router.push({
-                    path: '/advisoryList'
-                })
-            }
+
         }
     }
 </script>
@@ -119,27 +97,6 @@
                 }
             }
         }
-        .guide {
-            .subTitle {
-                margin-top: 110px;
-            }
-            .guideList {
-                .guideItem {
-                    padding: 10px 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    font-size: 26px;
-                    margin-top: 30px;
-                    color: #000;
-                    background: #fff;
-                    &:first-child {
-                        margin-top: 0;
-                    }
-                }
-            }
-        }
-
     }
 }
 </style>

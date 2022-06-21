@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="footer">
-            <van-button round block type="info" native-type="submit" @click="submitBtn">提交</van-button>
+            <van-button block color="#15CD63" native-type="submit" @click="submitBtn">提交</van-button>
         </div>
         <van-popup v-model="showPicker" position="bottom">
             <van-picker
@@ -241,8 +241,18 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .entryInfo {
+    /*修改header组件样式*/
+    .header {
+        background: #0035fc;
+        .back i {
+            color: #fff;
+        }
+        .title {
+            color: #fff;
+        }
+    }
     .scroll {
         .table {
             border-top: 2px solid #d2d2d2;
@@ -309,7 +319,9 @@
         }
     }
     .footer {
-        padding: 30px 25px;
+        .van-button__text {
+            color: #333;
+        }
     }
 }
 </style>

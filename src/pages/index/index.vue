@@ -66,7 +66,7 @@ export default {
 <style lang="scss">
     .index-section {
         .scroll {
-            background-color: #39a9ed;
+            background-color: #0035fc;
             overflow: hidden;
             .my-swipe {
                 margin: 25px 30px;
@@ -91,15 +91,15 @@ export default {
                     background: #fff;
                     font-size: 24px;
                     .btn {
-                        background: #9a6e3a;
-                        color: #fff;
+                        background: #15cd63;
+                        /*color: #fff;*/
                         width: 140px;
                         height: 40px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
                         font-size: 20px;
-                        border-radius: 20px;
+                        /*border-radius: 20px;*/
                     }
                 }
             }
@@ -109,6 +109,7 @@ export default {
                 padding: 0 30px;
                 font-size: 26px;
                 font-weight: bold;
+                color: #fff;
             }
             .indexImg {
                 width: 100%;

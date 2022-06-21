@@ -18,14 +18,25 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // console.log(from)
     let path = to.path
-    if (path == '/') {
-        path = '/home/index'
-        store.commit("changeTabActive",path)
-        next({path: '/home/index'})
-    }else {
-        store.commit("changeTabActive",to.path)
+    console.log(path)
+    // if (path == '/pioneerGame' || path == '/home/pioneerGame' || path == '/entryInfo') {
+    //     switch (path) {
+    //         case "/pioneerGame":
+    //             path = '/loginPage'
+    //             break;
+    //         case "/home/pioneerGame":
+    //             path = '/home/loginPage'
+    //             break;
+    //         case "/entryInfo":
+    //             path = '/login'
+    //             break;
+    //     }
+    //     store.commit("changeTabActive",path)
+    //     next({path: path})
+    // }else {
+        store.commit("changeTabActive", path)
         next()
-    }
+    // }
 
 })
 

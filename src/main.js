@@ -16,6 +16,7 @@ import moment from 'moment'
 import _ from 'lodash'
 
 import Common from './utils/common.js'
+import httpRequest from './request/http.js'
 // 全局样式
 import 'vant/lib/index.css';
 import "vue-easytable/libs/theme-default/index.css";
@@ -26,6 +27,7 @@ import './assets/style/index.scss'
 Vue.config.productionTip = false
 
 Vue.prototype.$common = Common
+Vue.prototype.$httpRequest = httpRequest
 Vue.prototype.$moment = moment
 Vue.prototype.$lodash = _
 

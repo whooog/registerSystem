@@ -2,8 +2,8 @@
     <div class="header" :class="{bgImg: showBg}">
         <div class="header-bg">
             <div class="header-content" >
-                <div class="header-back" v-if="hasClose">
-                    <div class="back" @click="handleTitleBack">
+                <div class="header-back">
+                    <div class="back" @click="handleTitleBack" v-if="hasClose">
                         <i class="iconfont icon-arrowthin"></i>
                     </div>
                 </div>

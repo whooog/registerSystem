@@ -1,42 +1,52 @@
-import loginPage from '../pages/login/loginPage.vue'
 import Home from '../pages/home/home.vue'
 import Index from '../pages/index/index.vue'
-import Scene from '../pages/scene/scene.vue'
 import newsList from '../pages/news/newsList.vue'
 import Page404 from '../pages/page404/index.vue'
-import Child from '../pages/child/child.vue'
 const routes = [{
         path: '/login',
         component: resolve => require(['@/pages/login/login'], resolve)
     },
     {
         path: '/loginPage',
-        component: loginPage
+        component: resolve => require(['@/pages/login/loginPage'], resolve)
     },
     {
         name: 'home',
         path: '/home',
         component: Home,
-        children: [{
+        children: [
+        {
             name: 'index',
             path: 'index',
             component: Index,
-        }, {
+        },
+        {
             name: 'newsList',
             path: 'newsList',
             component: newsList
-        }, {
-            name: 'scene',
-            path: 'scene',
-            component: Scene
-        },{
+        },
+        {
+            name: 'loginPage',
+            path: 'loginPage',
+            component: resolve => require(['@/pages/login/loginPage'], resolve)
+        },
+        {
+            name: 'pioneerGame',
+            path: 'pioneerGame',
+            component: resolve => require(['@/pages/index/pioneerGame'], resolve),
+        },
+        {
             path: '/',
             redirect: 'index'
         }]
     },
     {
-        path:"/child",
-        component: Child
+        path:"/advisoryList",
+        component: resolve => require(['@/pages/news/advisoryList'], resolve)
+    },
+    {
+        path:"/newsDetail",
+        component: resolve => require(['@/pages/news/newsDetail'], resolve)
     },
     {
         path: '/entryInfo',
@@ -70,11 +80,14 @@ const routes = [{
         path: '/addHotelDetail',
         component: resolve => require(['@/pages/index/addHotelDetail'], resolve)
     },
+    // {
+    //     path: '/',
+    //     component: Home,
+    // },
     {
         path: '/',
-        component: Home,
+        redirect: '/home/index'
     },
-
     {
         path: '*',
         component: Page404 //404页面

@@ -1,6 +1,7 @@
 /**axios封装
  * 请求拦截、相应拦截、错误统一处理
  */
+const baseUrl = 'http://match.xiyudata.com/'
 import axios from 'axios';
 import { Notify } from 'vant';
 import router from '../router/index'
@@ -26,9 +27,10 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
     response => {
         // console.log("response",response)
-        const status = response.data.code
+        // console.log(JSON.stringify(response))
+        const status = response.data.status
         if(status === 200){
-            return Promise.resolve(response);
+            return Promise.resolve(response.data);
         }else if(status === 401||status === 403){
             Notify({ type: 'primary', message:  response.data.msg});
             // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
@@ -39,79 +41,89 @@ axios.interceptors.response.use(
             Notify({ type: 'primary', message:  response.data.msg});
         }
     },
-    // 服务器状态码不是200的情况    
+    // 服务器状态码不是200的情况
     error => {
         console.log("error",error)
     }
 );
-/** 
- * get方法，对应get请求 
- * @param {String} url [请求的url地址] 
- * @param {Object} params [请求时携带的参数] 
- */
-export function get(url, params) {
-    return new Promise((resolve, reject) => {
-        axios.get(url, {
+export default {
+    /**
+     * get方法，对应get请求
+     * @param {String} url [请求的url地址]
+     * @param {Object} params [请求时携带的参数]
+     */
+    get(url, params) {
+        url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;
+        return new Promise((resolve, reject) => {
+            axios.get(url, {
                 params
             })
-            .then(res => {
-                resolve(res.data);
-            })
-            .catch(err => {
-                reject(err.data)
-            })
-    });
-}
-/** 
- * post方法，对应post请求 
- * @param {String} url [请求的url地址] 
- * @param {Object} params [请求时携带的参数] 
- */
-export function post(url, params) {
-    // console.log(params)
-    return new Promise((resolve, reject) => {
-        axios.post(url, params)
-            .then(res => {
-                resolve(res.data);
-            })
-            .catch(err => {
-                reject(err.data)
-            })
-    });
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err.data)
+                })
+        });
+    },
+
+    /**
+     * post方法，对应post请求
+     * @param {String} url [请求的url地址]
+     * @param {Object} params [请求时携带的参数]
+     */
+    post(url, params) {
+        // console.log(params)
+        url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;
+        return new Promise((resolve, reject) => {
+            axios.post(url, params)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err.data)
+                })
+        });
+    },
+
+    /**
+     * put方法，对应put请求
+     * @param {String} url [请求的url地址]
+     * @param {Object} params [请求时携带的参数]
+     */
+    put(url, params) {
+        // console.log(params)
+        return new Promise((resolve, reject) => {
+            axios.put(url, params)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err.data)
+                })
+        });
+    },
+
+
+    /**
+     * delete方法，对应delete请求
+     * @param {String} url [请求的url地址]
+     * @param {Object} params [请求时携带的参数]
+     */
+    delet(url, params) {
+        // console.log(params)
+        return new Promise((resolve, reject) => {
+            axios.delete(url, params)
+                .then(res => {
+                    resolve(res.data);
+                })
+                .catch(err => {
+                    reject(err.data)
+                })
+        });
+    }
 }
 
-/** 
- * put方法，对应put请求 
- * @param {String} url [请求的url地址] 
- * @param {Object} params [请求时携带的参数] 
- */
-export function put(url, params) {
-    // console.log(params)
-    return new Promise((resolve, reject) => {
-        axios.put(url, params)
-            .then(res => {
-                resolve(res.data);
-            })
-            .catch(err => {
-                reject(err.data)
-            })
-    });
-}
 
-/** 
- * delete方法，对应delete请求 
- * @param {String} url [请求的url地址] 
- * @param {Object} params [请求时携带的参数] 
- */
-export function delet(url, params) {
-    // console.log(params)
-    return new Promise((resolve, reject) => {
-        axios.delete(url, params)
-            .then(res => {
-                resolve(res.data);
-            })
-            .catch(err => {
-                reject(err.data)
-            })
-    });
-}
+
+

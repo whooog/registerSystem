@@ -1,6 +1,6 @@
 <template>
     <div class="addProjectInfo page">
-        <Header title="洽谈信息录入"></Header>
+        <Header title=""></Header>
         <div class="scroll">
             <van-tabs v-model="tabIndex" animated @click="changeCurrentIndex">
                 <van-tab v-for="(item,index) in tabList" :title="item" :key="index" :name="index">
