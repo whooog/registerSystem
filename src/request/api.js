@@ -1,11 +1,18 @@
-import {
-    get,
-    post
-} from './http'
+import httpRequst from './http'
 
-// 登录页面api
-export let login = p => post('/aaa', p); //登录
-export let getCode = p => get('/bbb', p); //登录
+export default {
+    uploadImg(file){
+        return new Promise((resolve, reject) => {
+            httpRequst.post('api/upload/upload', {
+                file
+            }, 'gameToken').then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+}
 
 
 

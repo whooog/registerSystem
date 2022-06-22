@@ -38,6 +38,7 @@
 </template>
 
 <script>
+
 export default {
     name:'',
     components: {},
@@ -47,9 +48,10 @@ export default {
         }
     },
     mounted() {
+
     },
     activated(){
-        console.log(this.$store.state.home.active)
+
     },
     methods: {
         tabChange(active){

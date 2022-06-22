@@ -1,9 +1,9 @@
 <template>
 <div class="addHotel page">
-    <Header title="添加住宿"></Header>
+    <Header title="添加住宿" colorStyle="blueStyle"></Header>
     <div class="scroll">
-        <van-button round block plain type="info" size="small" @click="jumpPage(item.id)" v-for="(item,index) in hotelList" :key="index">{{item.title}}</van-button>
-        <van-button round block type="info" size="small" @click="jumpPage()">添加住宿</van-button>
+        <van-button round block class="btn1" size="small" @click="jumpPage(item.id)" v-for="(item,index) in hotelList" :key="index">{{item.title}}</van-button>
+        <van-button round block class="btn2" size="small" @click="jumpPage()">+ 添加住宿</van-button>
     </div>
 </div>
 </template>
@@ -46,7 +46,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .addHotel {
     .scroll {
         display: flex;
@@ -54,6 +54,13 @@
         align-items: center;
         justify-content: center;
         padding: 0 40px;
+        .btn1 {
+            background: #0035fc;
+            color: #fff;
+        }
+        .btn2 {
+            border: 6px solid #0035fc !important;
+        }
         .van-button {
             margin-bottom: 20px;
         }

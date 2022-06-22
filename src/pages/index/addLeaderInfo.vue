@@ -19,18 +19,20 @@
             <div class="imgBox">
                 <div class="addImg">
                     <div class="title">照片</div>
-                    <van-uploader v-model="fileList" multiple :max-count="1" />
-
+                    <van-uploader v-model="fileList" :max-size="100 * 400" multiple :max-count="1" :before-read="beforeRead" @oversize="filterImgSize"/>
                 </div>
                 <div class="imgInfo">
                     <p>照片要求</p>
-                    <p>1: 照片要求照片要求照片要求照片要求照片要求照片要求照片要求照片要求</p>
-                    <p>2: 照片要求照片要求照片要求照片要求照片要求照片要求照片要求照片要求</p>
+                    <p>1. 图片尺寸大小等于600*800像素</p>
+                    <p>2. 图片中只有一个端正人脸</p>
+                    <p>3. 图片中人脸部分占总面积30%以上, 单色无图文背景</p>
+                    <p>4. 图片大小不小于100KB, 不大于400KB</p>
+                    <p>5. 格式为jpg</p>
                 </div>
             </div>
         </div>
         <div class="footer">
-            <van-button round block type="info" native-type="submit" @click="submitBtn">提交</van-button>
+            <van-button block native-type="submit" @click="submitBtn">提交</van-button>
         </div>
         <van-popup v-model="showPicker" position="bottom">
             <van-picker
@@ -136,7 +138,19 @@
                 this.showPicker = false;
                 this.$forceUpdate()
             },
-            submitBtn(){
+            // 限制图片大小
+            filterImgSize(){
+                this.$toast("图片大小不能超过600KB")
+            },
+            beforeRead(file) {
+                console.log(file)
+                // if (file.type !== 'image/jpeg') {
+                //     this.$toast('请上传 jpg 格式图片');
+                //     return false;
+                // }
+                return true;
+            },
+            async submitBtn(){
                 let { tableForm, fileList } = this;
                 for (let i = 0; i<tableForm.length; i++) {
                     if (tableForm[i].value == '') {
@@ -149,13 +163,16 @@
                     this.$toast('请上传照片');
                     return;
                 }
+                await this.$api.uploadImg(...fileList).then(res => {
+                    alert(JSON.stringify(res))
+                })
                 this.$router.back();
             }
         }
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .addLeaderInfo {
     .scroll {
         .table {
@@ -204,26 +221,31 @@
         .imgBox {
             width: 100%;
             display: flex;
-            align-items: center;
             padding: 0 30px;
             margin-top: 10px;
             .addImg {
-                width: 40%;
+                width: 35%;
                 .title {
                     font-size: 22px;
-                    line-height: 80px;
+                    line-height: 50px;
+                    margin-bottom: 10px;
                 }
             }
             .imgInfo {
-                width: 60%;
+                width: 65%;
                 p {
                     font-size: 22px;
+                    margin: 0;
+                    margin-top: 5px;
+                    line-height: 40px;
                 }
             }
         }
     }
     .footer {
-        padding: 30px 25px;
+        .van-button {
+            background: #15CD63;
+        }
     }
 }
 </style>

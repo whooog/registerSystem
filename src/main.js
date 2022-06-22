@@ -17,6 +17,7 @@ import _ from 'lodash'
 
 import Common from './utils/common.js'
 import httpRequest from './request/http.js'
+import api from './request/api.js'
 // 全局样式
 import 'vant/lib/index.css';
 import "vue-easytable/libs/theme-default/index.css";
@@ -28,6 +29,7 @@ Vue.config.productionTip = false
 
 Vue.prototype.$common = Common
 Vue.prototype.$httpRequest = httpRequest
+Vue.prototype.$api = api
 Vue.prototype.$moment = moment
 Vue.prototype.$lodash = _
 

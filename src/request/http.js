@@ -3,8 +3,9 @@
  */
 const baseUrl = 'http://match.xiyudata.com/'
 import axios from 'axios';
-import { Notify } from 'vant';
+import { Toast } from 'vant';
 import router from '../router/index'
+import localStorage from '../utils/localStorage'
 // 环境的切换
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
 
@@ -12,8 +13,9 @@ axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
 axios.defaults.timeout = 10000;
 
 // post请求头
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+let headers = {
+    // "Content-Type": 'application/json',
+}
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -32,13 +34,16 @@ axios.interceptors.response.use(
         if(status === 200){
             return Promise.resolve(response.data);
         }else if(status === 401||status === 403){
-            Notify({ type: 'primary', message:  response.data.msg});
+            // Notify({ type: 'primary', message:  response.data.msg});
+            Toast(response.data.msg)
+
             // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
             router.replace({
                 path: '/login'
             });
         }else{
-            Notify({ type: 'primary', message:  response.data.msg});
+            // Notify({ type: 'primary', message:  response.data.msg});
+            Toast(response.data.msg)
         }
     },
     // 服务器状态码不是200的情况
@@ -51,12 +56,26 @@ export default {
      * get方法，对应get请求
      * @param {String} url [请求的url地址]
      * @param {Object} params [请求时携带的参数]
+     * @param {String} tokenType [token类型]
+     * gameToken    参赛token
+     * signUpToken  报名token
      */
-    get(url, params) {
+    get(url, params,tokenType) {
         url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;
+        switch (tokenType) {
+            case 'gameToken':
+                headers.Authorization = localStorage.get('gameToken')
+                break;
+            case 'signUpToken':
+                headers.Authorization = localStorage.get('signUpToken')
+                break;
+        }
         return new Promise((resolve, reject) => {
-            axios.get(url, {
-                params
+            axios({
+                method:'get',
+                url: url,
+                params: params || {},
+                headers: headers
             })
                 .then(res => {
                     resolve(res.data);
@@ -71,18 +90,31 @@ export default {
      * post方法，对应post请求
      * @param {String} url [请求的url地址]
      * @param {Object} params [请求时携带的参数]
+     * @param {String} tokenType [token类型]
+     * gameToken    参赛token
+     * signUpToken  报名token
      */
-    post(url, params) {
-        // console.log(params)
+    post(url, params, tokenType) {
         url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;
+        switch (tokenType) {
+            case 'gameToken':
+                headers.Authorization = localStorage.get('gameToken')
+                break;
+            case 'signUpToken':
+                headers.Authorization = localStorage.get('signUpToken')
+                break;
+        }
         return new Promise((resolve, reject) => {
-            axios.post(url, params)
-                .then(res => {
-                    resolve(res.data);
-                })
-                .catch(err => {
-                    reject(err.data)
-                })
+            axios({
+                method: 'post',
+                url: url,
+                data: params || {},
+                headers: headers
+            }).then(res => {
+                resolve(res.data);
+             }).catch(err => {
+                reject(err.data)
+            })
         });
     },
 

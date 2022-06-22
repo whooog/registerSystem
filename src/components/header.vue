@@ -1,5 +1,5 @@
 <template>
-    <div class="header" :class="{bgImg: showBg}">
+    <div class="header" :class="{mainColor}">
         <div class="header-bg">
             <div class="header-content" >
                 <div class="header-back">
@@ -32,6 +32,10 @@ export default {
         hasClose: {
             type: [Boolean],
             default: true
+        },
+        mainColor: {
+            type: [Boolean],
+            default: true
         }
     },
     mounted() {
@@ -62,10 +66,13 @@ export default {
             font-weight: bold;
             color: #333;
         }
-        &.bgImg {
-            /*background: linear-gradient(to right, #4c2af0,#1269eb);*/
-            .header-bg {
-                /*color: #fff;*/
+        &.mainColor {
+            background: #0035fc;
+            .back i {
+                color: #fff;
+            }
+            .title {
+                color: #fff;
             }
         }
     }

@@ -1,5 +1,5 @@
 <template>
-    <div class="loginPage page">
+    <div class="login page">
         <Header :hasClose="false" title="投资机构单位人员报名注册"></Header>
         <div class="scroll">
             <div class="inputBox">
@@ -48,7 +48,7 @@
     import Header from "../../components/header.vue"
 
     export default {
-        name:'',
+        name:'login',
         components: {
             Header
         },
@@ -136,14 +136,7 @@
 </script>
 <style lang="scss">
     @import "../../assets/style/variable.scss";
-    .loginPage{
-        /*修改header组件样式*/
-        .header {
-            background: #0035fc;
-            .title {
-                color: #fff;
-            }
-        }
+    .login{
         .scroll {
             background: #fff;
             padding: 40px 30px 20px;
@@ -152,6 +145,9 @@
                 padding: 3px 16px;
                 border-radius: 0;
                 border: 1px solid #333;
+            }
+            input::placeholder {
+                color: #000;
             }
             .inputBox {
                 display: flex;
@@ -173,6 +169,7 @@
                         text-align: center;
                     }
                     input::placeholder {
+                        color: #000;
                     }
                 }
                 .label {
@@ -186,6 +183,9 @@
                         height: 100%;
                     }
                 }
+            }
+            .van-field__control {
+                text-align: right;
             }
             .submitBtn {
                 margin-top: 50px;

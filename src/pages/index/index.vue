@@ -1,6 +1,6 @@
 <template>
     <div class="index-section page">
-        <Header title="第八届互联网+大学生创新创业大赛" :hasClose="false"></Header>
+        <Header title="第八届互联网+大学生创新创业大赛" :hasClose="false" :main-color="false"></Header>
         <div class="scroll">
             <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
                 <van-swipe-item>1</van-swipe-item>

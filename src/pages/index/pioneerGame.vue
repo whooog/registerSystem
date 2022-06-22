@@ -7,7 +7,7 @@
             <div class="iconItem" @click="jumpPage('/addTrafficInfo')">交通ICON</div>
         </div>
         <div class="btnGroup">
-            <van-button round block :type="item.btnType" @click="jumpPage(item.path, item.params)" v-for="(item,index) in btnList" :key="index">{{item.text}}</van-button>
+            <van-button round class="btn" size="small" block @click="jumpPage(item.path, item.params)" v-for="(item,index) in btnList" :key="index">{{item.text}}</van-button>
         </div>
     </div>
 </div>
@@ -26,7 +26,6 @@
                 btnList: [
                     {
                         text: '分管创业工作校领导',
-                        btnType: 'primary',
                         path: '/addLeaderInfo',
                         params: {
                             title: '分管创业工作校领导',
@@ -35,7 +34,6 @@
                     },
                     {
                         text: '大赛工作部门主要负责人',
-                        btnType: 'info',
                         path: '/addLeaderInfo',
                         params: {
                             title: '大赛工作部门主要负责人',
@@ -44,13 +42,11 @@
                     },
                     {
                         text: '项目名称1',
-                        btnType: 'danger',
                         path: '/addLeaderInfo',
                         params: {}
                     },
                     {
                         text: '+新增参赛项目',
-                        btnType: 'warning',
                         path: '/addProjectInfo',
                         params: {}
                     }
@@ -91,8 +87,18 @@
         }
         .btnGroup {
             margin: 60px 30px;
-            .van-button {
-                margin-bottom: 20px !important;
+            .btn {
+                margin-bottom: 40px;
+                background: #15cd63;
+                color: #fff;
+                &:nth-child(3) {
+                    background: #0035fc;
+                }
+                &:nth-child(4) {
+                    background: #fff;
+                    border: 6px solid #0035fc;
+                    color: #000;
+                }
             }
         }
     }

@@ -1,3 +1,4 @@
+
 const state = {
     active:"index", //当前tab名称
 }
@@ -5,7 +6,8 @@ const state = {
 const mutations = {
     changeTabActive(state,active){
         state.active = active
-    }
+    },
+
 }
 
 const actions = {

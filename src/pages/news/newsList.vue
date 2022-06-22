@@ -1,6 +1,6 @@
 <template>
     <div class="newsList page">
-        <Header :hasClose="false" title="赛事咨询"></Header>
+        <Header :hasClose="false" title="赛事咨询" :main-color="false"></Header>
         <div class="scroll">
            <div class="advisory">
                <div class="subTitle">
@@ -105,17 +105,19 @@
 
         }
         .advisoryList {
+            padding: 0 15px;
             .advisoryItem {
-                padding: 10px 30px;
+                padding: 15px 15px;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                font-size: 26px;
-                margin-top: 30px;
-                color: #000;
-                background: #fff;
+                font-size: 25px;
+                font-weight: bold;
+                border-top: 1px solid #8b8dac;
                 &:first-child {
                     margin-top: 0;
+                    border-top: none;
+                    padding-top: 10px;
                 }
             }
         }
@@ -124,17 +126,18 @@
                 margin-top: 110px;
             }
             .guideList {
+                padding: 20px 15px;
                 .guideItem {
-                    padding: 10px 30px;
+                    padding: 15px 15px;
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    font-size: 26px;
-                    margin-top: 30px;
-                    color: #000;
-                    background: #fff;
+                    font-size: 25px;
+                    font-weight: bold;
+                    border-top: 1px solid #8b8dac;
                     &:first-child {
                         margin-top: 0;
+                        border-top: none;
                     }
                 }
             }

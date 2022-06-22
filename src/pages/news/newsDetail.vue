@@ -1,10 +1,9 @@
 <template>
-    <div class="newsList page">
-        <Header title="咨询详情"></Header>
+    <div class="newsDetail page">
+        <Header :title="title"></Header>
         <div class="scroll">
            <div class="advisory">
                <div class="subTitle">新闻咨询</div>
-               <div class="advisoryTitle">{{detail.title}}</div>
                <div class="content" v-html="detail.content"></div>
            </div>
 
@@ -16,7 +15,7 @@
     import Header from "@/components/header.vue"
 
     export default {
-        name: "newsList",
+        name: "newsDetail",
         components: {
             Header
         },
@@ -36,7 +35,7 @@
             let {id, pageType} = this.$route.query
             this.id = id
             this.pageType = pageType
-            this.title = pageType == 1 ?  '咨询详情' : '指南详情'
+            this.title = pageType == 1 ?  '新闻详情' : '指南详情'
             this.getDetail()
         },
         methods: {
@@ -59,30 +58,25 @@
     }
 </script>
 
-<style scoped lang="scss">
-.newsList {
+<style lang="scss">
+.newsDetail {
+
     .scroll {
         padding: 20px 30px;
         .subTitle {
-            height: 80px;
-            line-height: 90px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 26px;
-            font-weight: bold;
-            .van-icon {
-                font-size: 18px;
-            }
-        }
-        .advisoryList {
-            .advisoryItem {
-                line-height: 45px;
-
-            }
+            font-size: 28px;
+            text-align: center;
+            margin-top: 40px;
         }
         .content {
-            line-height: 50px;
+            border: 1px solid #ccc;
+            width: 90%;
+            margin: 50px auto;
+            padding: 5px 20px;
+            * {
+                word-wrap: break-word;
+                word-break: normal;
+            }
         }
     }
 }

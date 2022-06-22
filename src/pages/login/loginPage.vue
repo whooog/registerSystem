@@ -1,6 +1,6 @@
 <template>
     <div class="loginPage page">
-        <Header :hasClose="false"></Header>
+        <Header :hasClose="false" :main-color="false"></Header>
         <div class="scroll">
             <div class="inputBox">
                 <div class="input">
@@ -27,10 +27,10 @@
                     @click="showPicker = true"
                     size="mini"
             />
-            <van-field v-model="form.School" label="文本" placeholder="请规范填写学习全职" size="small"/>
+            <van-field v-model="form.School" label="高校名称" placeholder="请规范填写学习全职" size="small"/>
             <div style="margin: 50px 5px 20px;">
                 <van-button round block size="small" type="primary" native-type="submit" class="submitBtn" @click="handleInfo">注册</van-button>
-                <van-button round block plain size="small" type="default" native-type="submit" class="submitBtn">登录</van-button>
+                <van-button round block plain size="small" type="default" native-type="submit" class="submitBtn" @click="submitPage">登录</van-button>
             </div>
         </div>
 
@@ -90,7 +90,8 @@
             }
         };
     },
-    activated(){
+    mounted(){
+        clearInterval(this.timer)
 
     },
     methods: {
@@ -106,15 +107,13 @@
                 this.$toast('请检查手机号是否正确');
                 return;
             }
-            this.disStatus = true
+            this.disStatus = true;
             this.$httpRequest.post('api/Member/sendSms', {
                 mobile: phone
             }).then((res) => {
-                console.log(JSON.stringify(res))
-                this.from.verify_id = res.key
-                this.$toast('发送验证码成功');
+                this.form.verify_id = res.key
                 let sec = 60;
-                this.smsText =  sec + '秒后重新获取';
+                this.smsText =  sec + 's)重新获取';
                 clearInterval(this.timer)
                 this.timer = setInterval(() => {
                     sec--;
@@ -127,12 +126,25 @@
                 }, 1000);
 
             }).catch(() => {
+                this.disStatus = false;
             })
         },
         handleInfo(){
             this.$router.replace({
-                path:"/entryInfo"
+                path:"/pioneerGame"
             })
+        },
+        submitPage(){
+            let { phone } = this;
+            if (!this.$common.checkPhone(phone)){
+                this.$toast('请检查手机号是否正确');
+                return;
+            }
+            this.form.mobile = phone
+            this.form.phone = phone
+            console.log(JSON.stringify(this.form))
+            return;
+
         }
     }
 }

@@ -1,8 +1,8 @@
 <template>
     <div class="addProjectInfo page">
-        <Header title=""></Header>
+        <Header title="新增参赛项目"></Header>
         <div class="scroll">
-            <van-tabs v-model="tabIndex" animated @click="changeCurrentIndex">
+            <van-tabs v-model="tabIndex" type="card" animated @click="changeCurrentIndex">
                 <van-tab v-for="(item,index) in tabList" :title="item" :key="index" :name="index">
                     <div v-if="index == 0">
                         <div class="table">
@@ -39,8 +39,11 @@
                             </div>
                             <div class="imgInfo">
                                 <p>照片要求</p>
-                                <p>1: 照片要求照片要求照片要求照片要求照片要求照片要求照片要求照片要求</p>
-                                <p>2: 照片要求照片要求照片要求照片要求照片要求照片要求照片要求照片要求</p>
+                                <p>1. 图片尺寸大小等于600*800像素</p>
+                                <p>2. 图片中只有一个端正人脸</p>
+                                <p>3. 图片中人脸部分占总面积30%以上, 单色无图文背景</p>
+                                <p>4. 图片大小不小于100KB, 不大于400KB</p>
+                                <p>5. 格式为jpg</p>
                             </div>
                         </div>
                     </div>
@@ -49,7 +52,7 @@
 
         </div>
         <div class="footer">
-            <van-button round block type="info" native-type="submit" @click="submitBtn">保存</van-button>
+            <van-button block native-type="submit" @click="submitBtn">保存</van-button>
         </div>
         <van-popup v-model="showPicker" position="bottom">
             <van-picker
@@ -180,9 +183,31 @@
 
 <style lang="scss">
 .addProjectInfo {
+
     .scroll {
+        .van-tabs__wrap {
+            margin: 12px 0;
+        }
+        .van-tabs__nav--card {
+            border: none;
+        }
+        .van-tabs__nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
         .van-tab {
-            /*border: 2px solid #c5c5c5;*/
+            width: 22%;
+            border: 1px solid #d2d2d2;
+            color: #333;
+            line-height: 26px;
+            font-size: 12px;
+            flex: none;
+            border-radius: 5px;
+            &.van-tab--active {
+                background: #87c785;
+                color: #333;
+            }
         }
         .table {
             border-top: 2px solid #d2d2d2;
@@ -230,26 +255,31 @@
         .imgBox {
             width: 100%;
             display: flex;
-            align-items: center;
             padding: 0 30px;
             margin-top: 10px;
             .addImg {
-                width: 40%;
+                width: 35%;
                 .title {
                     font-size: 22px;
-                    line-height: 80px;
+                    line-height: 50px;
+                    margin-bottom: 10px;
                 }
             }
             .imgInfo {
-                width: 60%;
+                width: 65%;
                 p {
                     font-size: 22px;
+                    margin: 0;
+                    margin-top: 5px;
+                    line-height: 40px;
                 }
             }
         }
     }
     .footer {
-        padding: 30px 25px;
+        .van-button {
+            background: #87c785;
+        }
     }
 }
 </style>

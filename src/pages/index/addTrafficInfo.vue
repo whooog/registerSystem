@@ -19,12 +19,12 @@
                     </div>
                 </div>
                 <div style="margin: 80px 30px 25px;">
-                    <van-button round block plain type="info" size="small" @click="addCarNumber">+ 新增车牌号码</van-button>
+                    <van-button round block plain class="addNumber" size="small" @click="addCarNumber">+ 新增车牌号码</van-button>
                 </div>
             </div>
         </div>
         <div class="footer">
-            <van-button round block type="primary" native-type="submit" @click="submitBtn">提交</van-button>
+            <van-button block native-type="submit" @click="submitBtn">提交</van-button>
         </div>
         <van-popup v-model="showPicker" position="bottom">
             <van-picker
@@ -132,7 +132,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
     .addTrafficInfo {
         .scroll {
             .table {
@@ -187,10 +187,14 @@
                     }
                 }
             }
-
+            .addNumber {
+                border: 6px solid #0035fc !important;
+            }
         }
         .footer {
-            padding: 30px 25px;
+            .van-button {
+                background: #87c785;
+            }
         }
     }
 </style>

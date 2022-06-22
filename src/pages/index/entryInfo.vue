@@ -243,16 +243,6 @@
 
 <style lang="scss">
 .entryInfo {
-    /*修改header组件样式*/
-    .header {
-        background: #0035fc;
-        .back i {
-            color: #fff;
-        }
-        .title {
-            color: #fff;
-        }
-    }
     .scroll {
         .table {
             border-top: 2px solid #d2d2d2;

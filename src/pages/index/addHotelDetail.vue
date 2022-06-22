@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div v-else>
-                    <div class="tr">
+                    <div class="tr" :class="{'border' : index == 2 }">
                         <div class="td">{{item.label}}</div>
                         <div class="td">
                             <div class="stepperBox" v-if="item.type == 'stepper'">
@@ -34,7 +34,7 @@
         <div class="tips">提醒：一经确认不可修改，有疑问请电话联系</div>
     </div>
     <div class="footer">
-        <van-button round block type="primary" native-type="submit" @click="submitBtn">提交</van-button>
+        <van-button block native-type="submit" @click="submitBtn">提交</van-button>
     </div>
 
     <van-popup v-model="showPicker" position="bottom">
@@ -207,11 +207,11 @@
 .addHotelDetail {
     .scroll {
         .table {
-            border-top: 2px solid #d2d2d2;
+            border-bottom: 2px solid #d2d2d2;
             .tr {
                 padding: 0 30px;
                 height: 80px;
-                border-bottom: 2px solid #d2d2d2;
+                border-top: 2px solid #d2d2d2;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
@@ -252,14 +252,8 @@
                     }
 
                 }
-                &.tr2 {
-                    padding-right: 55px;
-                    .td:nth-child(1) {
-                        width: 30%;
-                    }
-                    .td:nth-child(2) {
-                        width: 70%;
-                    }
+                &.border {
+                    border-bottom: 2px solid #d2d2d2;
                 }
             }
         }
@@ -292,7 +286,9 @@
         }
     }
     .footer {
-         padding: 30px 25px;
+         .van-button {
+             background: #15cd63;
+         }
      }
 }
 </style>

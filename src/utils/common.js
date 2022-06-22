@@ -1,4 +1,3 @@
-
 export default {
     //判断是否为空
     isEmpty(val) {
@@ -44,9 +43,6 @@ export default {
         }else {
             return timestamp;
         }
-        // if($u.$utils.isEmpty(timestamp)) {
-        //     return ''
-        // }
     },
 
     checkPhone(phone){
@@ -54,4 +50,6 @@ export default {
         let regResult = reg.test(phone);
         return regResult;
     },
+
+
 }
