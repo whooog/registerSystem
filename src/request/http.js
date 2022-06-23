@@ -57,8 +57,8 @@ export default {
      * @param {String} url [请求的url地址]
      * @param {Object} params [请求时携带的参数]
      * @param {String} tokenType [token类型]
-     * gameToken    参赛token
-     * signUpToken  报名token
+     * gameToken    创新大赛token
+     * signUpToken  投资机构人员报名token
      */
     get(url, params,tokenType) {
         url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;
@@ -91,8 +91,8 @@ export default {
      * @param {String} url [请求的url地址]
      * @param {Object} params [请求时携带的参数]
      * @param {String} tokenType [token类型]
-     * gameToken    参赛token
-     * signUpToken  报名token
+     * gameToken    创新大赛token
+     * signUpToken  投资机构人员报名token
      */
     post(url, params, tokenType) {
         url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;

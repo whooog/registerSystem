@@ -19,7 +19,7 @@
             <div class="imgBox">
                 <div class="addImg">
                     <div class="title">照片</div>
-                    <van-uploader v-model="fileList" :max-size="100 * 400" multiple :max-count="1" :before-read="beforeRead" @oversize="filterImgSize"/>
+                    <van-uploader v-model="fileList" multiple :max-count="1" :before-read="beforeRead"/>
                 </div>
                 <div class="imgInfo">
                     <p>照片要求</p>
@@ -115,13 +115,15 @@
                 showPicker: false,
                 currentInfo: {},
 
-                fileList: []
+                fileList: [],
+                imgSrc: ''
             }
         },
         mounted() {
             let {title, type} = this.$route.query;
             this.title = title
-            this.type = type
+            this.type = type;
+
         },
         methods: {
             selectPicker(index) {
@@ -140,7 +142,7 @@
             },
             // 限制图片大小
             filterImgSize(){
-                this.$toast("图片大小不能超过600KB")
+                this.$toast("图片大小不能超过400KB")
             },
             beforeRead(file) {
                 console.log(file)
@@ -154,7 +156,6 @@
                 let { tableForm, fileList } = this;
                 for (let i = 0; i<tableForm.length; i++) {
                     if (tableForm[i].value == '') {
-                        console.log(tableForm[i].placeholder)
                         this.$toast(tableForm[i].placeholder);
                         return;
                     }
@@ -163,10 +164,13 @@
                     this.$toast('请上传照片');
                     return;
                 }
-                await this.$api.uploadImg(...fileList).then(res => {
-                    alert(JSON.stringify(res))
+                await this.$api.uploadImg({
+                    file: fileList[0].file
+                }).then(res => {
+                    this.imgSrc = res
                 })
-                this.$router.back();
+
+                // this.$router.back();
             }
         }
     }

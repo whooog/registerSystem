@@ -20,33 +20,24 @@
             <van-field
                     readonly
                     clickable
-                    name="picker"
-                    :value="value"
                     label="类别"
-                    placeholder="请选择"
-                    @click="showPicker = true"
+                    placeholder="参赛高校"
                     size="mini"
             />
             <van-field v-model="form.School" label="高校名称" placeholder="请规范填写学习全职" size="small"/>
             <div style="margin: 50px 5px 20px;">
-                <van-button round block size="small" type="primary" native-type="submit" class="submitBtn" @click="handleInfo">注册</van-button>
+                <van-button round block size="small" type="primary" native-type="submit" class="submitBtn" @click="submitPage">注册</van-button>
                 <van-button round block plain size="small" type="default" native-type="submit" class="submitBtn" @click="submitPage">登录</van-button>
             </div>
         </div>
 
-        <van-popup v-model="showPicker" position="bottom">
-            <van-picker
-                    show-toolbar
-                    :columns="columns"
-                    @confirm="onConfirm"
-                    @cancel="showPicker = false"
-            />
-        </van-popup>
+
     </div>
 </template>
 
 <script>
     import Header from "../../components/header.vue"
+    import localStorage from "../../utils/localStorage"
 
     export default {
     name:'',
@@ -58,18 +49,7 @@
             phone: '',
             sms: '',
 
-            columns: [
-                {
-                    text: '高校',
-                    id: 1
-                },
-                {
-                    text: '机构',
-                    id: 2
-                },
-            ],
-            value: '',
-            showPicker: false,
+
 
             disStatus: false,
             smsText: '发送验证码',
@@ -86,7 +66,7 @@
                 // 学校全称
                 School: '',
                 // 类别
-                type: ''
+                type: 1
             }
         };
     },
@@ -95,11 +75,6 @@
 
     },
     methods: {
-        onConfirm(value) {
-            this.value = value.text;
-            this.form.type = value.text;
-            this.showPicker = false;
-        },
         // 发送短信
         sendSmsCode(){
             let { phone } = this
@@ -130,20 +105,32 @@
             })
         },
         handleInfo(){
-            this.$router.replace({
-                path:"/pioneerGame"
-            })
+
         },
         submitPage(){
-            let { phone } = this;
+            let { phone, form } = this;
             if (!this.$common.checkPhone(phone)){
                 this.$toast('请检查手机号是否正确');
                 return;
             }
+            if (form.verify == ''){
+                this.$toast("请输入验证码");
+                return;
+            }
+            if (form.School == ''){
+                this.$toast("请输入高校名称");
+                return;
+            }
             this.form.mobile = phone
-            this.form.phone = phone
-            console.log(JSON.stringify(this.form))
-            return;
+            this.form.phone = phone,
+            this.$httpRequest.post('/api/Member/login', {
+                ...form
+            }).then(res => {
+                localStorage.set('gameToken', res.token)
+                this.$router.replace({
+                    path:"/pioneerGame"
+                })
+            })
 
         }
     }

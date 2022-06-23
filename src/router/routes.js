@@ -33,7 +33,7 @@ const routes = [{
         {
             name: 'pioneerGame',
             path: 'pioneerGame',
-            component: resolve => require(['@/pages/index/pioneerGame'], resolve),
+            component: resolve => require(['@/pages/signUp/pioneerGame'], resolve),
         },
         {
             path: '/',
@@ -48,37 +48,48 @@ const routes = [{
         path:"/newsDetail",
         component: resolve => require(['@/pages/news/newsDetail'], resolve)
     },
+    // 添加洽谈信息
+    {
+        path: '/addEntryInfo',
+        component: resolve => require(['@/pages/signUp/addEntryInfo'], resolve)
+    },
+    // 洽谈信息详情
     {
         path: '/entryInfo',
-        component: resolve => require(['@/pages/index/entryInfo'], resolve)
+        component: resolve => require(['@/pages/signUp/entryInfo'], resolve)
     },
     {
         path: '/pioneerGame',
-        component: resolve => require(['@/pages/index/pioneerGame'], resolve),
+        component: resolve => require(['@/pages/signUp/pioneerGame'], resolve),
     },
     {
         path: '/addTrafficInfo',
-        component: resolve => require(['@/pages/index/addTrafficInfo'], resolve)
+        component: resolve => require(['@/pages/signUp/addTrafficInfo'], resolve)
     },
     // 新增分管创业工作校领导
     {
         path: '/addLeaderInfo',
-        component: resolve => require(['@/pages/index/addLeaderInfo'], resolve)
+        component: resolve => require(['@/pages/signUp/addLeaderInfo'], resolve)
     },
     // 新增项目信息
     {
         path: '/addProjectInfo',
-        component: resolve => require(['@/pages/index/addProjectInfo'], resolve)
+        component: resolve => require(['@/pages/signUp/addProjectInfo'], resolve)
     },
     // 新增住宿
     {
         path: '/addHotel',
-        component: resolve => require(['@/pages/index/addHotel'], resolve)
+        component: resolve => require(['@/pages/signUp/addHotel'], resolve)
     },
     // 新增住宿详情
     {
         path: '/addHotelDetail',
-        component: resolve => require(['@/pages/index/addHotelDetail'], resolve)
+        component: resolve => require(['@/pages/signUp/addHotelDetail'], resolve)
+    },
+    // 用餐
+    {
+        path: '/dining',
+        component: resolve => require(['@/pages/signUp/dining'], resolve)
     },
     // {
     //     path: '/',

@@ -3,7 +3,7 @@
         <Header :title="title"></Header>
         <div class="scroll">
            <div class="advisory">
-               <div class="subTitle">新闻咨询</div>
+               <div class="subTitle">{{detail.title}}</div>
                <div class="content" v-html="detail.content"></div>
            </div>
 

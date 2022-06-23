@@ -56,7 +56,10 @@ export default {
                 path = "/entryInfo"
             }
             this.$router.push({
-                path: path
+                path: path,
+                query: {
+                    hasClose: true
+                }
             })
         }
     }

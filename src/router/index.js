@@ -19,7 +19,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // console.log(from)
     let path = to.path
-    console.log(to.path)
     if ((path == '/pioneerGame' || path == '/home/pioneerGame') && localStorage.get('gameToken') == '') {
         switch (path) {
             case "/pioneerGame":
@@ -31,8 +30,7 @@ router.beforeEach((to, from, next) => {
         }
         store.commit("changeTabActive",path)
         next({path: path})
-    }else if (path == '/entryInfo' &&  localStorage.get('signUpToken') == ''){
-        // 跳转报名登录页
+    }else if (path == '/entryInfo' && localStorage.get('signUpToken') == ''){
         path = '/login'
         store.commit("changeTabActive",path)
         next({path: path})

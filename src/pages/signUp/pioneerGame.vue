@@ -1,8 +1,9 @@
 <template>
 <div class="pioneerGame page">
-    <Header title="参赛报名"></Header>
+    <Header title="参赛报名" :hasClose="hasClose"></Header>
     <div class="scroll">
         <div class="iconBox">
+            <div class="iconItem" @click="jumpPage('/addHotel')">交通</div>
             <div class="iconItem" @click="jumpPage('/addHotel')">住宿ICON</div>
             <div class="iconItem" @click="jumpPage('/addTrafficInfo')">交通ICON</div>
         </div>
@@ -50,10 +51,17 @@
                         path: '/addProjectInfo',
                         params: {}
                     }
-                ]
+                ],
+
+                // 是否显示返回按钮
+                hasClose: false,
             }
         },
         mounted() {
+            let { hasClose } = this.$route.query
+            if (hasClose) {
+                this.hasClose = hasClose
+            }
         },
         methods: {
             jumpPage(path, query={}){
@@ -72,10 +80,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 80%;
+            width: 88%;
             margin: 30px auto 0;
             .iconItem {
-                width: 40%;
+                width: 29%;
                 height: 180px;
                 background: #0035fc;
                 color: #fff;

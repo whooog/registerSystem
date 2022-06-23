@@ -14,24 +14,15 @@
         >
             <van-tabbar-item name="/home/index">
                 <span>首页</span>
-                <template #icon="props">
-                    <img v-if="props.active" src="../../assets/images/tab-index-active.png" />
-                    <img v-else src="../../assets/images/tab-index.png" />
-                </template>
+
             </van-tabbar-item>
             <van-tabbar-item name="/home/newsList">
                 <span>赛事咨询</span>
-                <template #icon="props">
-                    <img v-if="props.active" src="../../assets/images/tab-task-active.png" />
-                    <img v-else src="../../assets/images/tab-task.png" />
-                </template>
+
             </van-tabbar-item>
             <van-tabbar-item name="/home/pioneerGame">
                 <span>赛事报名</span>
-                <template #icon="props">
-                    <img v-if="props.active" src="../../assets/images/tab-scene-active.png" />
-                    <img v-else src="../../assets/images/tab-scene.png" />
-                </template>
+
             </van-tabbar-item>
         </van-tabbar>
     </div>
@@ -64,17 +55,29 @@ export default {
     }
 }
 </script>
-<style scoped lang="scss">
+<style lang="scss">
     .home-section{
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
+
         .tab-page{
             &.cant-tab-page{
                 height: calc(100% - 50px);
                 overflow: hidden;
             }
+        }
+        .tab-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .van-tabbar-item {
+            border: 1px solid #bbbbbb ;
+            flex: none !important;
+            width: 31%;
+            height: 100%;
         }
         .tab-bar{
             position: relative;

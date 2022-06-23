@@ -20,32 +20,23 @@
             <van-field
                     readonly
                     clickable
-                    name="picker"
-                    :value="value"
                     label="类别"
-                    placeholder="请选择"
-                    @click="showPicker = true"
+                    placeholder="对接洽谈活动投资机构"
                     size="mini"
             />
+
             <div style="margin: 50px 5px 20px;">
-                <van-button round block size="small" color="#0035fc" native-type="submit" class="submitBtn" @click="handleInfo">注册</van-button>
-                <van-button round block plain size="small" type="default" native-type="submit" class="submitBtn">登录</van-button>
+                <van-button round block size="small" color="#0035fc" native-type="submit" class="submitBtn" @click="submitPage">注册</van-button>
+                <van-button round block plain size="small" type="default" native-type="submit" class="submitBtn" @click="submitPage">登录</van-button>
             </div>
         </div>
 
-        <van-popup v-model="showPicker" position="bottom">
-            <van-picker
-                    show-toolbar
-                    :columns="columns"
-                    @confirm="onConfirm"
-                    @cancel="showPicker = false"
-            />
-        </van-popup>
     </div>
 </template>
 
 <script>
     import Header from "../../components/header.vue"
+    import localStorage from "../../utils/localStorage";
 
     export default {
         name:'login',
@@ -57,17 +48,6 @@
                 phone: '',
                 sms: '',
 
-                columns: [
-                    {
-                        text: '高校',
-                        id: 1
-                    },
-                    {
-                        text: '机构',
-                        id: 2
-                    },
-                ],
-                value: '',
                 showPicker: false,
 
                 disStatus: false,
@@ -83,7 +63,7 @@
                     // 手机号
                     phone: '',
                     // 类别
-                    type: ''
+                    type: 2
                 }
             };
         },
@@ -91,15 +71,10 @@
 
         },
         methods: {
-            onConfirm(value) {
-                this.value = value.text;
-                this.form.type = value.text;
-                this.showPicker = false;
-            },
             // 发送短信
-            sendSmsCode(){
-                let { phone } = this
-                if (!this.$common.checkPhone(phone)){
+            sendSmsCode() {
+                let {phone} = this
+                if (!this.$common.checkPhone(phone)) {
                     this.$toast('请检查手机号是否正确');
                     return;
                 }
@@ -107,16 +82,15 @@
                 this.$httpRequest.post('api/Member/sendSms', {
                     mobile: phone
                 }).then((res) => {
-                    console.log(JSON.stringify(res))
                     this.$toast('发送验证码成功');
-                    this.from.verify_id = res.key
+                    this.form.verify_id = res.key
                     let sec = 60;
-                    this.smsText =  sec + '秒后重新获取';
+                    this.smsText = sec + '秒后重新获取';
                     clearInterval(this.timer)
                     this.timer = setInterval(() => {
                         sec--;
                         this.smsText = sec + 's)重新获取';
-                        if(sec === 0) {
+                        if (sec === 0) {
                             this.smsText = '发送验证码';
                             clearInterval(this.timer);
                             this.disStatus = false;
@@ -124,12 +98,29 @@
                     }, 1000);
 
                 }).catch(() => {
+                    this.disStatus = false;
                 })
             },
-            handleInfo(){
-                this.$router.replace({
-                    path:"/entryInfo"
-                })
+            submitPage() {
+                let {phone, form} = this;
+                if (!this.$common.checkPhone(phone)) {
+                    this.$toast('请检查手机号是否正确');
+                    return;
+                }
+                if (form.verify == '') {
+                    this.$toast("请输入验证码");
+                    return;
+                }
+                this.form.mobile = phone
+                this.form.phone = phone,
+                    this.$httpRequest.post('/api/Member/login', {
+                        ...form
+                    }).then(res => {
+                        localStorage.set('signUpToken', res.token)
+                        this.$router.replace({
+                            path: "/entryInfo"
+                        })
+                    })
             }
         }
     }
