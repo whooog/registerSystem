@@ -85,7 +85,7 @@
                     this.$toast('发送验证码成功');
                     this.form.verify_id = res.key
                     let sec = 60;
-                    this.smsText = sec + '秒后重新获取';
+                    this.smsText = sec + 's)重新获取';
                     clearInterval(this.timer)
                     this.timer = setInterval(() => {
                         sec--;

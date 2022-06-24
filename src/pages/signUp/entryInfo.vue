@@ -1,12 +1,12 @@
 <template>
     <div class="entryInfo page">
-        <Header title="洽谈信息录入"></Header>
+        <Header :title="title"></Header>
         <div class="scroll">
             <div class="table">
                 <div class="tr" v-for="(item,key) in tableForm" :key="key">
                     <div class="td">{{item.label}}</div>
                     <div class="td">
-                        <template v-if="is_add">
+                        <template v-if="!is_add">
                             <div class="inputItem" v-if="item.type == 'text'">
                                 <input type="text" v-model="item.value" :placeholder="item.placeholder">
                             </div>
@@ -17,7 +17,7 @@
 
                         </template>
                         <template v-else>
-                            <div class="inputItem" v-if="item.type == 'text'">
+                            <div class="inputItem">
                                 <input type="text" v-model="item.value" readonly>
                             </div>
                         </template>
@@ -28,7 +28,10 @@
             <div class="imgBox">
                 <div class="addImg">
                     <div class="title">照片</div>
-                    <van-uploader v-model="fileList" multiple :max-count="1" :before-read="beforeRead"/>
+                    <van-uploader v-model="fileList" multiple :max-count="1" :before-read="beforeRead" v-if="!is_add"/>
+                    <div class="photoImg" v-else>
+                        <img :src="photo" alt="">
+                    </div>
                 </div>
                 <div class="imgInfo">
                     <p>照片要求</p>
@@ -41,7 +44,7 @@
             </div>
         </div>
         <div class="footer">
-            <van-button block color="#15CD63" native-type="submit" @click="submitBtn" v-if="is_add">提交</van-button>
+            <van-button block color="#15CD63" native-type="submit" @click="submitBtn" v-if="!is_add">提交</van-button>
             <van-button block color="#15CD63" native-type="submit" @click="back" v-else>首页</van-button>
         </div>
         <van-popup v-model="showPicker" position="bottom">
@@ -82,6 +85,7 @@
         },
         data(){
             return {
+                title: '',
                 /**
                  * tableForm
                  * type-  表单类型 text-文本框 select-选择框 phone-手机号 time-选择时间
@@ -233,7 +237,20 @@
                      * */
                     this.is_add = res.is_add == 1 ? true : false
                     if (res.is_add == 1) {
-                        this.formatForm()
+                        this.title = '洽谈信息录入详情'
+                        let { tableForm } = this;
+                        for (let key in tableForm) {
+                            if (key == 'arrive_time') {
+                                tableForm[key].value = res.arrive_time_text
+                            }else if (key == 'leave_time'){
+                                tableForm[key].value = res.leave_time_text
+                            }else {
+                                tableForm[key].value = res[key]
+                            }
+                        }
+                        this.photo = res.photo
+                    }else {
+                        this.title = '洽谈信息录入'
                     }
                 }).catch(() => {
                 })
@@ -278,9 +295,6 @@
                 }
                 return val;
             },
-            formatForm(){
-
-            },
             back(){
                 this.$router.back()
             },
@@ -312,13 +326,13 @@
                         form[key] = tableForm[key].value
                     }
                 }
-                this.$httpRequest.post('api/Participant.Company/edit', form, "signUpToken").then(res => {
-                    console.log(JSON.stringify(res))
-                }).catch(() => {
+                this.$httpRequest.post('api/Participant.Company/edit', form, "signUpToken").then(() => {
                     this.$toast('提交成功')
                     setTimeout(() => {
                         this.$router.back();
                     }, 500)
+                }).catch(() => {
+
                 })
 
             }
@@ -384,6 +398,9 @@
                     font-size: 22px;
                     line-height: 50px;
                     margin-bottom: 10px;
+                }
+                .photoImg , .photoImg img{
+                    width: 80%;
                 }
             }
             .imgInfo {

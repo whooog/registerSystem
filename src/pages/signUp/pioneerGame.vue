@@ -1,6 +1,6 @@
 <template>
 <div class="pioneerGame page">
-    <Header title="参赛报名" :hasClose="hasClose"></Header>
+    <Header title="" :hasClose="hasClose"></Header>
     <div class="scroll">
         <div class="iconBox">
             <div class="iconItem" @click="jumpPage('/addHotel')">交通</div>
@@ -42,11 +42,6 @@
                         }
                     },
                     {
-                        text: '项目名称1',
-                        path: '/addLeaderInfo',
-                        params: {}
-                    },
-                    {
                         text: '+新增参赛项目',
                         path: '/addProjectInfo',
                         params: {}
@@ -62,8 +57,33 @@
             if (hasClose) {
                 this.hasClose = hasClose
             }
+            this.getProjectList()
         },
         methods: {
+            getProjectList(){
+              this.$httpRequest.post('api/Participant.Project/index', {}, 'gameToken').then(res => {
+                  if (res.length>0){
+                      let btnList = this.btnList
+                      let lastItem = btnList.slice(btnList.length-1)
+                      btnList.splice(btnList.length-1)
+
+                      res.forEach((item) => {
+                          btnList.push({
+                              text: item.project_name,
+                              path: '/addProjectInfo',
+                              params: {
+                                  title: item.project_name|| '',
+                                  project_id: item.project_id,
+                                  type: 'edit'
+                              }
+                          })
+                      })
+                      btnList.push(lastItem[0])
+                      this.btnList = btnList
+
+                  }
+              })
+            },
             jumpPage(path, query={}){
                 this.$router.push({
                     path: path,
@@ -97,12 +117,12 @@
             margin: 60px 30px;
             .btn {
                 margin-bottom: 40px;
-                background: #15cd63;
+                background: #0035fc;
                 color: #fff;
-                &:nth-child(3) {
-                    background: #0035fc;
+                &:nth-child(1), &:nth-child(2) {
+                    background: #15cd63;
                 }
-                &:nth-child(4) {
+                &:last-child {
                     background: #fff;
                     border: 6px solid #0035fc;
                     color: #000;

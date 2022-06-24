@@ -128,7 +128,8 @@
             }).then(res => {
                 localStorage.set('gameToken', res.token)
                 this.$router.replace({
-                    path:"/pioneerGame"
+                    path:"/pioneerGame",
+                    query: this.$route.query
                 })
             })
 
@@ -146,6 +147,13 @@
                 margin-top: 20px;
                 padding: 3px 16px;
                 border-radius: 0;
+            }
+
+            .van-field__control {
+                text-align: right;
+                &::placeholder {
+                    color: #000;
+                }
             }
             .inputBox {
                 display: flex;

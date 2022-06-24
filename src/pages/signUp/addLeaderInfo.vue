@@ -3,7 +3,7 @@
         <Header :title="title"></Header>
         <div class="scroll">
             <div class="table">
-                <div class="tr" v-for="(item,index) in tableForm" :key="index">
+                <div class="tr" v-for="(item,key) in tableForm" :key="key">
                     <div class="td">{{item.label}}</div>
                     <div class="td">
                         <div class="inputItem" v-if="item.type == 'text'">
@@ -12,7 +12,7 @@
                         <div class="inputItem" v-else-if="item.type == 'phone' || item.type == 'number'" >
                             <input type="number" v-model="item.value" :placeholder="item.placeholder">
                         </div>
-                        <div class="selectForm" v-else-if="item.type == 'select' || item.type == 'time'" @click="selectPicker(index)">{{item.value == '' ? item.placeholder : item.value}}  <van-icon name="arrow-down" /></div>
+                        <div class="selectForm" v-else-if="item.type == 'select' || item.type == 'time'" @click="selectPicker(key)">{{item.value == '' ? item.placeholder : item.value}}  <van-icon name="arrow-down" /></div>
                     </div>
                 </div>
             </div>
@@ -60,55 +60,51 @@
         data(){
             return {
                 title: '',
-                type: '',
+
+                // leader-分管创业工作校领导 principal-大赛工作部门主要负责人
+                type: 'leader',
                 /**
                  * tableForm
                  * type-  表单类型 text-文本框 select-选择框 phone-手机号 time-选择时间
                  * */
-                tableForm: [
-                    {
+                tableForm: {
+                    name:{
                         label: '姓名',
                         placeholder: '请输入姓名',
                         type: 'text',
                         defaultIndex: 0,
                         value: ''
                     },
-                    {
+                    phone: {
                         label: '手机号',
                         placeholder: '请输入手机号',
                         type: 'phone',
                         defaultIndex: 0,
                         value: ''
                     },
-                    {
+                    id_card: {
                         label: '身份证号、护照号',
                         placeholder: '请输入身份证号、护照号',
-                        type: 'number',
+                        type: 'text',
                         defaultIndex: 0,
                         value: ''
                     },
-                    {
+                    role: {
                         label: '职位',
-                        placeholder: '请输入备注',
+                        placeholder: '请输入职位',
                         type: 'text',
                         defaultIndex: 0,
-                        value: '',
+                        value: ''
                     },
-                    {
+                    sex: {
                         label: '性别',
                         placeholder: '请选择性别',
                         type: 'select',
                         defaultIndex: 0,
                         value: '',
-                        content: [{
-                            text: '男',
-                            id: 1
-                        },{
-                            text: '女',
-                            id: 2
-                        }]
+                        content: ['男', '女']
                     },
-                ],
+                },
 
 
                 pickerIndex: 0,
@@ -123,9 +119,34 @@
             let {title, type} = this.$route.query;
             this.title = title
             this.type = type;
+            this.getPorjectDetail();
 
         },
         methods: {
+
+            // 获取项目人员信息
+            getPorjectDetail(){
+                this.$httpRequest.post('api/Participant.Person/details', {
+                    position: this.type == 'leader'? 1 : 2,
+                },'gameToken').then((res) => {
+                    let {tableForm} = this;
+
+                    for (let key in tableForm){
+                        tableForm[key].value = res[key]
+                    }
+
+                    if (res.img != '') {
+                        this.fileList = [{
+                            url: res.img
+                        }]
+                    }
+
+                    console.log(tableForm)
+
+                }).catch(() => {
+
+                })
+            },
             selectPicker(index) {
                 let item = this.tableForm[index]
                 this.pickerIndex = index
@@ -135,7 +156,7 @@
             onConfirm(value, index){
                 let { pickerIndex } = this;
 
-                this.tableForm[pickerIndex].value = value.text;
+                this.tableForm[pickerIndex].value = value;
                 this.tableForm[pickerIndex].defaultIndex = index;
                 this.showPicker = false;
                 this.$forceUpdate()
@@ -154,23 +175,45 @@
             },
             async submitBtn(){
                 let { tableForm, fileList } = this;
-                for (let i = 0; i<tableForm.length; i++) {
-                    if (tableForm[i].value == '') {
-                        this.$toast(tableForm[i].placeholder);
-                        return;
-                    }
+                // for (let i = 0; i<tableForm.length; i++) {
+                //     if (tableForm[i].value == '') {
+                //         this.$toast(tableForm[i].placeholder);
+                //         return;
+                //     }
+                // }
+                // if (fileList.length == 0) {
+                //     this.$toast('请上传照片');
+                //     return;
+                // }
+                if (fileList.length > 0 && fileList[0].file) {
+                    await this.$api.uploadImg({
+                        file: fileList[0].file
+                    }).then(res => {
+                        this.imgSrc = res
+                    })
                 }
-                if (fileList.length == 0) {
-                    this.$toast('请上传照片');
-                    return;
-                }
-                await this.$api.uploadImg({
-                    file: fileList[0].file
-                }).then(res => {
-                    this.imgSrc = res
-                })
 
-                // this.$router.back();
+                let form = {};
+                for (let key in tableForm) {
+                    form[key] = tableForm[key].value;
+                }
+                /**
+                 * 1 分管创业工作领导 2大赛工作部门主要负责人
+                 * 3项目负责人 4 指导老师 5 项目成员
+                 * */
+
+                this.$httpRequest.post('api/Participant.Person/edit', {
+                    position: this.type == 'leader'? 1 : 2,
+                    ...form,
+                    img: this.imgSrc
+                },'gameToken').then(() => {
+                    this.$toast('提交成功')
+                    setTimeout(() => {
+                        this.$router.back();
+                    }, 1000)
+                }).catch(() => {
+
+                })
             }
         }
     }

@@ -49,41 +49,25 @@
         },
         data(){
             return {
-                tableForm: [
-                    {
+                tableForm: {
+                    is_bus: {
                         label: '是否需要大巴接送(酒店与赛场间)',
                         placeholder: '请选择',
                         type: 'select',
                         defaultIndex: 0,
                         value: '',
-                        content: [{
-                            text: '是',
-                            id: 1
-                        },{
-                            text: '否',
-                            id: 0
-                        }]
+                        content: ["是", "否"]
                     },
-                    {
+                    is_myself: {
                         label: '是否有自驾车辆',
                         placeholder: '请选择',
                         type: 'select',
                         defaultIndex: 0,
                         value: '',
-                        content: [{
-                            text: '是',
-                            id: 1
-                        },{
-                            text: '否',
-                            id: 0
-                        }]
+                        content: ["是", "否"]
                     },
-                ],
-                carNumberList: [
-                    {
-                        value: ''
-                    }
-                ],
+                },
+                carNumberList: [''],
                 pickerIndex: 0,
                 showPicker: false,
                 currentInfo: {},
@@ -100,15 +84,13 @@
             },
             onConfirm(value, index){
                 let { pickerIndex } = this;
-                this.tableForm[pickerIndex].value = value.text;
+                this.tableForm[pickerIndex].value = value;
                 this.tableForm[pickerIndex].defaultIndex = index;
                 this.showPicker = false;
                 this.$forceUpdate()
             },
             addCarNumber(){
-                this.carNumberList.push({
-                    value: ''
-                })
+                this.carNumberList.push('')
             },
             submitBtn(){
                 let { tableForm, carNumberList } = this;
@@ -118,15 +100,23 @@
                         return;
                     }
                 }
-                let index = 0
-                carNumberList.forEach(item => {
-                    if (item.value.trim() !== ''){
-                        ++index;
-                    }
-                })
-                if (index == 0) {
+                let list = carNumberList.filter(item => {return item.value.trim() !== ''})
+
+                if (list.length == 0) {
                     this.$toast('请输入车牌号码')
                 }
+                // this.$httpRequest.post('api/Participant.Person/edit', {
+                //     position: this.type == 'leader'? 1 : 2,
+                //
+                //     img: this.imgSrc
+                // },'gameToken').then(() => {
+                //     this.$toast('提交成功')
+                //     setTimeout(() => {
+                //         this.$router.back();
+                //     }, 1000)
+                // }).catch(() => {
+                //
+                // })
             }
         }
     }
