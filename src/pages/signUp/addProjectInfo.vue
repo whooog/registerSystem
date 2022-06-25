@@ -257,14 +257,14 @@
                 ]
 
                 if (this.pageType == 'edit') {
-                    this.getPorjectDetail(1)
-                    this.getPorjectDetail(2)
-                    this.getPorjectDetail(3)
+                    this.getDetail(1)
+                    this.getDetail(2)
+                    this.getDetail(3)
                 }
             },
 
             // 获取项目人员信息
-            getPorjectDetail(index){
+            getDetail(index){
                 this.$httpRequest.post('api/Participant.Person/details', {
                     project_id: this.project_id,
                     position: this.getPositionType(index),
@@ -275,11 +275,11 @@
                     for (let key in table){
                         if (table[key].type == 'uploader' && res[key] != '') {
                             table[key].fileList = [{
-                                    url: res[key]
+                                    url: res[key] || ''
                                 }]
                             console.log(res[key])
                         }else {
-                            table[key].value = res[key]
+                            table[key].value = res[key] || ''
 
                         }
                     }

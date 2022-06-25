@@ -119,20 +119,20 @@
             let {title, type} = this.$route.query;
             this.title = title
             this.type = type;
-            this.getPorjectDetail();
+            this.getDetail();
 
         },
         methods: {
 
             // 获取项目人员信息
-            getPorjectDetail(){
+            getDetail(){
                 this.$httpRequest.post('api/Participant.Person/details', {
                     position: this.type == 'leader'? 1 : 2,
                 },'gameToken').then((res) => {
                     let {tableForm} = this;
 
                     for (let key in tableForm){
-                        tableForm[key].value = res[key]
+                        tableForm[key].value = res[key] || ''
                     }
 
                     if (res.img != '') {

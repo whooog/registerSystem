@@ -108,6 +108,7 @@
 
         },
         submitPage(){
+            console.log(JSON.stringify(this.$route.query))
             let { phone, form } = this;
             if (!this.$common.checkPhone(phone)){
                 this.$toast('请检查手机号是否正确');

@@ -14,7 +14,7 @@
                     <div class="td">车牌号码 {{index > 0 ? index+1 : ''}}</div>
                     <div class="td">
                         <div class="inputItem">
-                            <input type="text" v-model="item.value" placeholder="请填写">
+                            <input type="text" v-model="carNumberList[index]" placeholder="请填写">
                         </div>
                     </div>
                 </div>
@@ -74,8 +74,26 @@
             }
         },
         mounted() {
+            this.getDetail();
         },
         methods: {
+            // 获取项目人员信息
+            getDetail(){
+                this.$httpRequest.post('api/Participant.Traffic/index', {},'gameToken').then((res) => {
+                    let {tableForm} = this;
+
+                    for (let key in tableForm) {
+                        tableForm[key].value = res[key] || ''
+                    }
+                    if (res.car_list.length > 0){
+                        this.carNumberList = res.car_list
+                    }
+                    console.log(tableForm)
+
+                }).catch(() => {
+
+                })
+            },
             selectPicker(index) {
                 let item = this.tableForm[index]
                 this.pickerIndex = index
@@ -94,29 +112,32 @@
             },
             submitBtn(){
                 let { tableForm, carNumberList } = this;
-                for (let i = 0; i<tableForm.length; i++) {
-                    if (tableForm[i].value == '') {
-                        this.$toast(tableForm[i].placeholder+tableForm[i].label);
+                let form = {};
+                for (let key in tableForm) {
+                    if (tableForm[key].value == '') {
+                        this.$toast(tableForm[key].placeholder+tableForm[key].label);
                         return;
+                    }else {
+                        form[key] = tableForm[key].value
                     }
                 }
-                let list = carNumberList.filter(item => {return item.value.trim() !== ''})
 
+                let list = carNumberList.filter(item => {return  !this.$common.isEmpty(item)})
                 if (list.length == 0) {
                     this.$toast('请输入车牌号码')
+                    return;
                 }
-                // this.$httpRequest.post('api/Participant.Person/edit', {
-                //     position: this.type == 'leader'? 1 : 2,
-                //
-                //     img: this.imgSrc
-                // },'gameToken').then(() => {
-                //     this.$toast('提交成功')
-                //     setTimeout(() => {
-                //         this.$router.back();
-                //     }, 1000)
-                // }).catch(() => {
-                //
-                // })
+                this.$httpRequest.post('api/Participant.Traffic/update', {
+                    ...form,
+                    car: list.join()
+                },'gameToken').then(() => {
+                    this.$toast('提交成功')
+                    setTimeout(() => {
+                        this.$router.back();
+                    }, 1000)
+                }).catch(() => {
+
+                })
             }
         }
     }

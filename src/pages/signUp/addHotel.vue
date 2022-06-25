@@ -2,8 +2,8 @@
 <div class="addHotel page">
     <Header title="添加住宿" colorStyle="blueStyle"></Header>
     <div class="scroll">
-        <van-button round block class="btn1" size="small" @click="jumpPage(item.id)" v-for="(item,index) in hotelList" :key="index">{{item.title}}</van-button>
-        <van-button round block class="btn2" size="small" @click="jumpPage()">+ 添加住宿</van-button>
+        <van-button round block class="btn1" size="small" @click="toHotelDetail(item.hotel_id)" v-for="(item,index) in hotelList" :key="index">{{item.hotel_name}}</van-button>
+        <van-button round block class="btn2" size="small" @click="addHotelDetail()">+ 添加住宿</van-button>
     </div>
 </div>
 </template>
@@ -18,27 +18,30 @@
         },
         data(){
             return {
-                hotelList: [
-                    {
-                        title: '酒店1',
-                        id: 1
-                    },
-                    {
-                        title: '酒店2',
-                        id: 1
-                    }
-                ]
+                hotelList: []
             }
         },
         mounted() {
-
+            this.getList()
         },
         methods: {
-            jumpPage(id=''){
+            getList(){
+                this.$httpRequest.post('api/Participant.Userhotel/index', {}, 'gameToken').then(res => {
+                    if (res.length>0){
+                       this.hotelList = res;
+                    }
+                })
+            },
+            addHotelDetail(){
                 this.$router.push({
-                    path: '/addHotelDetail',
+                    path: '/addHotelDetail'
+                })
+            },
+            toHotelDetail(id=''){
+                this.$router.push({
+                    path: '/hotelDetail',
                     query: {
-                        id
+                        hotel_id: id
                     }
                 })
             }
