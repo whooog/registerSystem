@@ -49,7 +49,7 @@
                     url = 'api/EventGuide/detail'
                 }
                 this.$httpRequest.post(url,params).then(res => {
-                   this.detail = res;
+                   this.detail = res.data;
                 }).catch(() => {
 
                 })

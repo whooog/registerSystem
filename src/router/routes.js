@@ -96,6 +96,10 @@ const routes = [{
         path: '/dining',
         component: resolve => require(['@/pages/signUp/dining'], resolve)
     },
+    {
+        path: '/diningDetail',
+        component: resolve => require(['@/pages/signUp/diningDetail'], resolve)
+    },
     // {
     //     path: '/',
     //     component: Home,

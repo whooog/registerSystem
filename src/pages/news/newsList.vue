@@ -49,14 +49,14 @@
         methods: {
             getList(){
                 this.$httpRequest.post('api/NewsList/index',{}).then(res => {
-                   this.newslist = res.data;
+                   this.newslist = res.data.data;
                 }).catch(() => {
 
                 })
             },
             guideList(){
                 this.$httpRequest.post('api/EventGuide/index',{}).then(res => {
-                    this.eventGuideList = res.data;
+                    this.eventGuideList = res.data.data;
                 }).catch(() => {
 
                 })

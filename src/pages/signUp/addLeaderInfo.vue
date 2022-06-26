@@ -129,19 +129,18 @@
                 this.$httpRequest.post('api/Participant.Person/details', {
                     position: this.type == 'leader'? 1 : 2,
                 },'gameToken').then((res) => {
+                    let response = res.data
                     let {tableForm} = this;
 
                     for (let key in tableForm){
-                        tableForm[key].value = res[key] || ''
+                        tableForm[key].value = response[key] || ''
                     }
 
-                    if (res.img != '') {
+                    if (response.img != '') {
                         this.fileList = [{
-                            url: res.img
+                            url: response.img
                         }]
                     }
-
-                    console.log(tableForm)
 
                 }).catch(() => {
 

@@ -7,17 +7,8 @@
                 <div v-if="item.showStatus">
                     <template v-if="item.type == 'table'">
                         <div class="hotelInfoTable">
-                            <div class="th">
-                                <div class="td" >酒店名称</div>
-                                <div class="td" >酒店1</div>
-                                <div class="td" >酒店1</div>
-                                <div class="td" >酒店1</div>
-                            </div>
-                            <div class="th">
-                                <div class="td" >222</div>
-                                <div class="td" >222</div>
-                                <div class="td" >222</div>
-                                <div class="td" >222</div>
+                            <div class="th" v-for="(row, i) in item.content" :key="i+'row'">
+                                <div class="td" v-for="(tr, trIndex) in row" :key="trIndex+'tr'">{{tr.name}}</div>
                             </div>
                         </div>
                     </template>
@@ -147,6 +138,7 @@
                     table: {
                         type: 'table',
                         showStatus: false,
+                        content: []
                     },
                     hotel_name:{
                         label: '选择酒店',
@@ -187,33 +179,74 @@
         methods: {
             //酒店列表
             getHotelList(){
-                this.$httpRequest.post('api/Hotel/index', {
-                    check_in: this.tableForm.check_in.time,
-                    check_out:  this.tableForm.check_out.time
-                }, 'gameToken').then(res => {
-                    if (res.length>0){
-                        // 格式化数组
-                        res.forEach(item => {
-                            item.text = item.hotel_name
-                        })
-                        this.tableForm.hotel_name.content = res;
-                    }
-                })
+               return new Promise((resolve, reject) => {
+                   this.$httpRequest.post('api/Hotel/index', {
+                       check_in: this.tableForm.check_in.time,
+                       check_out:  this.tableForm.check_out.time
+                   }, 'gameToken').then(res => {
+                       let list = res.data
+                       if (list.length>0){
+                           // 格式化数组
+                           list.forEach(item => {
+                               item.text = item.hotel_name
+                           })
+                           this.tableForm.hotel_name.content = list;
+                       }
+                       resolve()
+                   }).catch(() => {
+                       reject()
+                   })
+               })
+            },
+            // 获取酒店列表详情
+            getHotelDetail(){
+               return new Promise((resolve, reject) => {
+                   this.$httpRequest.post('api/Hotel.Stock/table', {
+                       check_in: this.tableForm.check_in.time,
+                       check_out:  this.tableForm.check_out.time,
+                   }, 'gameToken').then(res => {
+                       // eslint-disable-next-line no-unused-vars
+                       let response = res.data
+                       let arr = [];
+                       if (response.type.length > 0) {
+                           response.type.forEach(item => {item.name = item.type_name })
+                           arr.push([
+                               { name: '' },
+                               ...response.type
+                           ])
+                       }
+                       if (response.roomType.length>0){
+                           // 格式化数组
+                           arr.push(... response.roomType)
+                           this.tableForm.table.content = arr;
+                       }
+                       resolve()
+                   }).catch(() => {
+                       reject()
+                   })
+               })
             },
             //酒店房型列表
             getRoomList(){
-                this.$httpRequest.post('api/Hotel.Type/index', {
-                    check_in: this.tableForm.check_in.time,
-                    check_out:  this.tableForm.check_out.time
-                }, 'gameToken').then(res => {
-                    if (res.length>0){
-                        // 格式化数组
-                        res.forEach(item => {
-                            item.num = 1;
-                            item.name = item.type_name;
-                        })
-                        this.tableForm.selectRoom.content = res;
-                    }
+                return new Promise((resolve, reject) => {
+                    this.$httpRequest.post('api/Hotel.Type/index', {
+                        check_in: this.tableForm.check_in.time,
+                        check_out: this.tableForm.check_out.time,
+                        hotel_id: this.tableForm.hotel_name.id
+                    }, 'gameToken').then(res => {
+                        let response = res.data;
+                        if (response.length>0){
+                            // 格式化数组
+                            response.forEach(item => {
+                                item.num = 1;
+                                item.name = item.type_name;
+                            })
+                            this.tableForm.selectRoom.content = response;
+                        }
+                        resolve()
+                    }).catch(() => {
+                        reject()
+                    })
                 })
             },
             toggle(index) {
@@ -225,7 +258,7 @@
                 this.currentInfo = item
                 this.showPicker = true;
             },
-            onConfirm(value, index){
+           onConfirm(value, index){
                 let { pickerIndex, tableForm } = this;
                 if (this.currentInfo.type === 'select') {
                     tableForm[pickerIndex].value = value.text;
@@ -235,21 +268,35 @@
                     tableForm[pickerIndex].value = this.timeFormat(value)
                     tableForm[pickerIndex].time = value.valueOf()
                 }
-                if (pickerIndex === 'is_stay') {
-                    let bool = value.text === '是';
-                    tableForm.check_in.showStatus = bool;
-                    tableForm.check_out.showStatus = bool;
-                }else if (pickerIndex === 'check_in' || pickerIndex === 'check_out'){
-                    let bool = !this.$common.isEmpty(tableForm.check_in.value) && !this.$common.isEmpty(tableForm.check_out.value);
-                    tableForm.table.showStatus = bool;
-                    tableForm.hotel_name.showStatus = bool;
-                    tableForm.selectRoom.showStatus = bool;
-                    if (bool) {
-                        this.getHotelList();
-                        this.getRoomList();
-                    }
 
-                }
+                // 格式化显示状态
+               let stayBool =  tableForm.is_stay.value === '是';
+               let timeBool = tableForm.check_in.showStatus && tableForm.check_out.showStatus && !this.$common.isEmpty(tableForm.check_in.value) && !this.$common.isEmpty(tableForm.check_out.value);
+               let hotelName = tableForm.hotel_name.showStatus && !this.$common.isEmpty(tableForm.hotel_name.value);
+
+               for (let key in tableForm) {
+                   if (key !== 'is_stay'){
+                       tableForm[key].showStatus = false
+                   }
+               }
+               if (stayBool) {
+                   tableForm.check_in.showStatus = true;
+                   tableForm.check_out.showStatus = true;
+                   if (timeBool){
+                       this.getHotelDetail().then(() => {
+                           tableForm.table.showStatus = true;
+                       });
+                       this.getHotelList().then(() => {
+                           tableForm.hotel_name.showStatus = true;
+                       })
+                   }
+                   if (timeBool && hotelName){
+                       this.getRoomList().then(() => {
+                           tableForm.selectRoom.showStatus = true;
+                       })
+                   }
+               }
+
                 this.showPicker = false;
                 this.$forceUpdate()
             },
@@ -266,8 +313,6 @@
                 })
                 this.showPicker = false;
                 this.tableForm[this.pickerIndex].value = value
-
-                console.log(this.hotelRoomType)
             },
             timeFormat(time) {
                 let year = time.getFullYear();
@@ -286,7 +331,7 @@
                     params.check_out = tableForm.check_out.time
                     params.hotel_id = tableForm.hotel_name.id
                     params.hotel_name = tableForm.hotel_name.value
-                    params.content = this.hotelRoomType
+                    params.content = JSON.stringify(this.hotelRoomType)
 
 
                     for (let key in params) {
@@ -397,11 +442,9 @@
                     background: #fff;
                 }
                 .td {
-                    height: 70px;
-                    line-height: 70px;
                     width: calc(100% / 4);
                     border-right: 1px solid #E3E3E3;
-                    padding: 0 6px;
+                    padding: 20px 6px;
                 }
             }
         }

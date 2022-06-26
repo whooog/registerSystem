@@ -23,23 +23,23 @@ export default {
             let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
             let D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
             D += ' ';
-            let h,m,s;
-            if(date.getHours() < 10) {
-                h = "0" + date.getHours() + ':';
-            } else {
-                h = date.getHours() + ':';
-            }
-            if(date.getMinutes() < 10) {
-                m = "0" + date.getMinutes() + ':';
-            } else {
-                m = date.getMinutes() + ':';
-            }
-            if(date.getSeconds() < 10) {
-                s = "0" + date.getSeconds();
-            } else {
-                s = date.getSeconds();
-            }
-            return Y + M + D + h + m + s;
+            // let h,m,s;
+            // if(date.getHours() < 10) {
+            //     h = "0" + date.getHours() + ':';
+            // } else {
+            //     h = date.getHours() + ':';
+            // }
+            // if(date.getMinutes() < 10) {
+            //     m = "0" + date.getMinutes() + ':';
+            // } else {
+            //     m = date.getMinutes() + ':';
+            // }
+            // if(date.getSeconds() < 10) {
+            //     s = "0" + date.getSeconds();
+            // } else {
+            //     s = date.getSeconds();
+            // }
+            return Y + M + D;
         }else {
             return timestamp;
         }

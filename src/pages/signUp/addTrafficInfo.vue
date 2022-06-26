@@ -80,15 +80,15 @@
             // 获取项目人员信息
             getDetail(){
                 this.$httpRequest.post('api/Participant.Traffic/index', {},'gameToken').then((res) => {
+                    let response = res.data;
                     let {tableForm} = this;
 
                     for (let key in tableForm) {
-                        tableForm[key].value = res[key] || ''
+                        tableForm[key].value = response[key] || ''
                     }
-                    if (res.car_list.length > 0){
-                        this.carNumberList = res.car_list
+                    if (response.car_list.length > 0){
+                        this.carNumberList = response.car_list
                     }
-                    console.log(tableForm)
 
                 }).catch(() => {
 

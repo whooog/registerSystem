@@ -82,8 +82,9 @@
                 this.$httpRequest.post('api/Member/sendSms', {
                     mobile: phone
                 }).then((res) => {
+                    let response = res.data;
                     this.$toast('发送验证码成功');
-                    this.form.verify_id = res.key
+                    this.form.verify_id = response.key
                     let sec = 60;
                     this.smsText = sec + 's)重新获取';
                     clearInterval(this.timer)
@@ -116,7 +117,7 @@
                     this.$httpRequest.post('/api/Member/login', {
                         ...form
                     }).then(res => {
-                        localStorage.set('signUpToken', res.token)
+                        localStorage.set('signUpToken', res.data.token)
                         this.$router.replace({
                             path: "/entryInfo"
                         })

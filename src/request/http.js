@@ -12,6 +12,10 @@ axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
 // 请求超时时间
 axios.defaults.timeout = 10000;
 
+// token 类型
+// eslint-disable-next-line no-unused-vars
+let tokenStatus = '';
+
 // post请求头
 let headers = {
     // "Content-Type": 'application/json',
@@ -34,16 +38,30 @@ axios.interceptors.response.use(
         if(status === 200){
             return Promise.resolve(response.data);
         }else if(status === 401||status === 403){
-            // Notify({ type: 'primary', message:  response.data.msg});
-            Toast(response.data.msg)
-
+            // Notify({ type: 'primary', message:  response.msg});
+            Toast( response.data.msg)
             // 跳转登录页面，并将要浏览的页面fullPath传过去，登录成功后跳转需要访问的页面
+
             router.replace({
                 path: '/login'
             });
+        }else if(status === 101){
+            // token 过期
+            switch (tokenStatus) {
+                case 'gameToken':
+                    router.replace({
+                        path: '/loginPage'
+                    });
+                    break;
+                case 'signUpToken':
+                    router.replace({
+                        path: '/login'
+                    });
+                    break;
+            }
         }else{
-            // Notify({ type: 'primary', message:  response.data.msg});
-            Toast(response.data.msg)
+            // Notify({ type: 'primary', message:  response.msg});
+            Toast( response.data.msg)
         }
     },
     // 服务器状态码不是200的情况
@@ -62,6 +80,7 @@ export default {
      */
     get(url, params,tokenType) {
         url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;
+        tokenStatus = tokenType
         switch (tokenType) {
             case 'gameToken':
                 headers.Authorization = localStorage.get('gameToken')
@@ -78,10 +97,12 @@ export default {
                 headers: headers
             })
                 .then(res => {
-                    resolve(res.data);
+                    if(res.status === 200){
+                        resolve(res);
+                    }
                 })
                 .catch(err => {
-                    reject(err.data)
+                    reject(err)
                 })
         });
     },
@@ -96,6 +117,7 @@ export default {
      */
     post(url, params, tokenType) {
         url = url && url.startsWith('http') ? url : `${baseUrl}${url}`;
+        tokenStatus = tokenType
         switch (tokenType) {
             case 'gameToken':
                 headers.Authorization = localStorage.get('gameToken')
@@ -111,9 +133,11 @@ export default {
                 data: params || {},
                 headers: headers
             }).then(res => {
-                resolve(res.data);
+                if(res.status === 200){
+                    resolve(res);
+                }
              }).catch(err => {
-                reject(err.data)
+                reject(err)
             })
         });
     },
@@ -128,10 +152,12 @@ export default {
         return new Promise((resolve, reject) => {
             axios.put(url, params)
                 .then(res => {
-                    resolve(res.data);
+                    if(res.status === 200){
+                        resolve(res);
+                    }
                 })
                 .catch(err => {
-                    reject(err.data)
+                    reject(err)
                 })
         });
     },
@@ -147,10 +173,10 @@ export default {
         return new Promise((resolve, reject) => {
             axios.delete(url, params)
                 .then(res => {
-                    resolve(res.data);
+                    resolve(res);
                 })
                 .catch(err => {
-                    reject(err.data)
+                    reject(err)
                 })
         });
     }

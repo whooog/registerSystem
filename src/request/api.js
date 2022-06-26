@@ -6,7 +6,7 @@ export default {
             let formData = new FormData()
             formData.append('file',param.file)
             httpRequst.post('api/upload/upload', formData).then(res => {
-                resolve(res)
+                resolve(res.data)
             }).catch(err => {
                 reject(err)
             })

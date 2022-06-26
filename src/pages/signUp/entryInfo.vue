@@ -235,20 +235,21 @@
                     /**
                      * is_add 0-未提交 1-已提交
                      * */
-                    this.is_add = res.is_add == 1 ? true : false
-                    if (res.is_add == 1) {
+                    let response = res.data;
+                    this.is_add = response.is_add == 1 ? true : false
+                    if (response.is_add == 1) {
                         this.title = '洽谈信息录入详情'
                         let { tableForm } = this;
                         for (let key in tableForm) {
                             if (key == 'arrive_time') {
-                                tableForm[key].value = res.arrive_time_text
+                                tableForm[key].value = response.arrive_time_text
                             }else if (key == 'leave_time'){
-                                tableForm[key].value = res.leave_time_text
+                                tableForm[key].value = response.leave_time_text
                             }else {
-                                tableForm[key].value = res[key]
+                                tableForm[key].value = response[key]
                             }
                         }
-                        this.photo = res.photo
+                        this.photo = response.photo
                     }else {
                         this.title = '洽谈信息录入'
                     }
@@ -278,7 +279,6 @@
                     this.tableForm[pickerIndex].value = value
                     this.tableForm[pickerIndex].value = `${value.getMonth() + 1}月${value.getDate()}日${value.getHours()}点`;
                     this.tableForm[pickerIndex].date = value.valueOf().toString();
-                    console.log(value.valueOf())
                 }
                 this.showPicker = false;
                 this.$forceUpdate()
@@ -302,7 +302,6 @@
                 let { tableForm, fileList } = this;
                 for (let i = 0; i<tableForm.length; i++) {
                     if (tableForm[i].value == '') {
-                        console.log(tableForm[i].placeholder)
                         this.$toast(tableForm[i].placeholder);
                         return;
                     }

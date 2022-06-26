@@ -3,7 +3,7 @@
     <Header title="" :hasClose="hasClose"></Header>
     <div class="scroll">
         <div class="iconBox">
-            <div class="iconItem" @click="jumpPage('/addHotel')">交通</div>
+            <div class="iconItem" @click="jumpPage('/dining')">用餐</div>
             <div class="iconItem" @click="jumpPage('/addHotel')">住宿ICON</div>
             <div class="iconItem" @click="jumpPage('/addTrafficInfo')">交通ICON</div>
         </div>
@@ -53,21 +53,22 @@
             }
         },
         mounted() {
-            let { hasClose } = this.$route.query
-            if (hasClose) {
-                this.hasClose = hasClose
+            let hasClose =  this.$route.query.hasClose
+            if (!this.$common.isEmpty(hasClose)) {
+                this.hasClose = JSON.parse(hasClose)
             }
             this.getProjectList()
         },
         methods: {
             getProjectList(){
               this.$httpRequest.post('api/Participant.Project/index', {}, 'gameToken').then(res => {
-                  if (res.length>0){
+                  let response = res.data;
+                  if (response.length>0){
                       let btnList = this.btnList
                       let lastItem = btnList.slice(btnList.length-1)
                       btnList.splice(btnList.length-1)
 
-                      res.forEach((item) => {
+                      response.forEach((item) => {
                           btnList.push({
                               text: item.project_name,
                               path: '/addProjectInfo',

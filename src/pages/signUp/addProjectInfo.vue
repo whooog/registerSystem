@@ -269,17 +269,16 @@
                     project_id: this.project_id,
                     position: this.getPositionType(index),
                 },'gameToken').then((res) => {
+                    let response = res.data;
                     let tableForm = [...this.tableForm]
                     let table = tableForm[index-1];
-
                     for (let key in table){
                         if (table[key].type == 'uploader' && res[key] != '') {
                             table[key].fileList = [{
-                                    url: res[key] || ''
+                                    url: response[key] || ''
                                 }]
-                            console.log(res[key])
                         }else {
-                            table[key].value = res[key] || ''
+                            table[key].value = response[key] || ''
 
                         }
                     }
@@ -332,7 +331,7 @@
                     project_id: this.project_id,
                     project_name: this.project_name
                 },'gameToken').then((res) => {
-                    this.project_id = res.project_id
+                    this.project_id = res.data.project_id
                     this.$toast('提交成功')
                     setTimeout(() => {
                         this.tabIndex+=1;
@@ -355,8 +354,6 @@
                         form[key] = table[key].value;
                     }
                 }
-                console.log(form)
-
                 this.$httpRequest.post('api/Participant.Person/edit', {
                     project_id: this.project_id,
                     project_name: this.project_name,

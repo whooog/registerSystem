@@ -38,7 +38,7 @@
         methods: {
             getList(){
                 this.$httpRequest.post('api/NewsList/index',{}).then(res => {
-                   this.newslist = res.data;
+                   this.newslist = res.data.data;
                 }).catch(() => {
 
                 })
