@@ -4,7 +4,7 @@
         <div class="scroll">
            <div class="advisory">
                <div class="subTitle">
-                   新闻咨询
+                   新闻资讯
                    <div class="more" @click="toAdvisory">more <van-icon name="down" class="icon"/>
                </div></div>
                <div class="advisoryList">
@@ -62,7 +62,7 @@
                 })
             },
             jumpPage(id, type){
-                // 1- 新闻咨询  2- 赛事指南
+                // 1- 新闻资讯  2- 赛事指南
                 this.$router.push({
                     path: '/newsDetail',
                     query: {

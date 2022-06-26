@@ -222,6 +222,7 @@
                 maxDate: '',
 
                 fileList: [],
+                photo: ''
             }
         },
         mounted() {

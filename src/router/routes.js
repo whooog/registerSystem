@@ -1,14 +1,18 @@
 import Home from '../pages/home/home.vue'
 import Index from '../pages/index/index.vue'
 import newsList from '../pages/news/newsList.vue'
+import pioneerGame from '../pages/signUp/pioneerGame.vue'
+import entryInfo from '../pages/signUp/entryInfo.vue'
 import Page404 from '../pages/page404/index.vue'
+import loginPage from '../pages/login/loginPage.vue'
+import login from '../pages/login/login.vue'
 const routes = [{
         path: '/login',
-        component: resolve => require(['@/pages/login/login'], resolve)
+        component: login
     },
     {
         path: '/loginPage',
-        component: resolve => require(['@/pages/login/loginPage'], resolve)
+        component: loginPage
     },
     {
         name: 'home',
@@ -28,12 +32,12 @@ const routes = [{
         {
             name: 'loginPage',
             path: 'loginPage',
-            component: resolve => require(['@/pages/login/loginPage'], resolve)
+            component: loginPage
         },
         {
             name: 'pioneerGame',
             path: 'pioneerGame',
-            component: resolve => require(['@/pages/signUp/pioneerGame'], resolve),
+            component: pioneerGame,
         },
         {
             path: '/',
@@ -56,11 +60,11 @@ const routes = [{
     // 洽谈信息详情
     {
         path: '/entryInfo',
-        component: resolve => require(['@/pages/signUp/entryInfo'], resolve)
+        component: entryInfo
     },
     {
         path: '/pioneerGame',
-        component: resolve => require(['@/pages/signUp/pioneerGame'], resolve),
+        component: pioneerGame,
     },
     {
         path: '/addTrafficInfo',

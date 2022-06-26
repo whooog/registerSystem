@@ -24,7 +24,7 @@
                     placeholder="参赛高校"
                     size="mini"
             />
-            <van-field v-model="form.school" label="高校名称" placeholder="请规范填写学习全职" size="small"/>
+            <van-field v-model="form.school" label="高校名称" placeholder="请规范填写学校全称" size="small"/>
             <div style="margin: 50px 5px 20px;">
                 <van-button round block size="small" type="primary" native-type="submit" class="submitBtn" @click="submitPage">注册</van-button>
                 <van-button round block plain size="small" type="default" native-type="submit" class="submitBtn" @click="submitPage">登录</van-button>

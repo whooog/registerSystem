@@ -4,7 +4,7 @@
         <div class="scroll">
            <div class="advisory">
                <div class="subTitle">
-                   新闻咨询
+                   新闻资讯
                </div>
                <div class="advisoryList">
                    <div class="advisoryItem content" @click="jumpPage(item.newslist_id, 1)" v-for="(item, index) in newslist" :key="index+'a'">
@@ -44,7 +44,7 @@
                 })
             },
             jumpPage(id, type){
-                // 1- 新闻咨询  2- 赛事指南
+                // 1- 新闻资讯  2- 赛事指南
                 this.$router.push({
                     path: '/newsDetail',
                     query: {

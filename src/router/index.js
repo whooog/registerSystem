@@ -13,6 +13,7 @@ VueRouter.prototype.push = function push(location) {
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+    // mode: 'history',   // 打包注释
     routes
 })
 

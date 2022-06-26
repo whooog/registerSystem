@@ -163,6 +163,13 @@
                     }
                     if (response.roomType.length>0){
                         // 格式化数组
+                        response.roomType.forEach((item) => {
+                            while (item.length <= (response.type.length)) {
+                                item.push({
+                                    name: ''
+                                })
+                            }
+                        })
                         arr.push(... response.roomType)
                         this.tableForm.table.content = arr;
                     }
@@ -247,21 +254,31 @@
             margin: 30px 40px;
             border-top: 1px solid #E3E3E3;
             border-left: 1px solid #E3E3E3;
+            border-right: 1px solid #E3E3E3;
+            overflow-x: auto;
             .th {
                 border-bottom: 1px solid #E3E3E3;
-                background: #F2F2F2;
                 display: flex;
                 align-items: center;
-                &:nth-child(2n) {
-                    background: #fff;
-                }
                 .td {
-                    height: 70px;
-                    line-height: 70px;
-                    width: calc(100% / 4);
+                    width: 24%;
+                    flex-shrink: 0;
                     border-right: 1px solid #E3E3E3;
                     padding: 0 6px;
+                    min-height: 70px;
+                    display: flex;
+                    align-items: center;
+                    background: #F2F2F2;
+                    .text {
+                        height: 100%;
+                    }
                 }
+                &:nth-child(2n) {
+                    .td {
+                        background: #fff;
+                    }
+                }
+
             }
         }
         .tips {

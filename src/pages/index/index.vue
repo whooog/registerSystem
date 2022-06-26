@@ -22,7 +22,7 @@
                 <img :src="detail.introduce" alt="" class="indexImg">
             </div>
             <div v-if="detail.milestone">
-                <div class="subTitle">大赛里程杯</div>
+                <div class="subTitle">大赛里程碑</div>
                 <img :src="detail.milestone" alt="" class="indexImg">
             </div>
         </div>
