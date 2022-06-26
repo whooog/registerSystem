@@ -136,7 +136,7 @@
                         tableForm[key].value = response[key] || ''
                     }
 
-                    if (response.img != '') {
+                    if (response.img != "") {
                         this.fileList = [{
                             url: response.img
                         }]

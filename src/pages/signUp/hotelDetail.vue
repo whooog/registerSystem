@@ -5,7 +5,7 @@
         <div class="table">
             <div v-for="(item,key,index) in tableForm" :key="key">
                 <template v-if="item.type == 'table'">
-                    <div class="hotelInfoTable">
+                    <div class="hotelInfoTable"  v-if="item.content.length>0">
                         <div class="th" v-for="(row, i) in item.content" :key="i+'row'">
                             <div class="td" v-for="(tr, trIndex) in row" :key="trIndex+'tr'">{{tr.name}}</div>
                         </div>
@@ -134,11 +134,14 @@
                         }
                         // eslint-disable-next-line no-unused-vars
                         let content = JSON.parse(list.content), roomName = '';
-                        content.forEach(item => {
-                            roomName+=item.name
-                        })
-                        tableForm.selectRoom.value = roomName;
-                        this.hotelRoomType = content;
+                        if (content && content.length>0){
+                            content.forEach(item => {
+                                roomName+=item.name
+                            })
+                            tableForm.selectRoom.value = roomName;
+                            this.hotelRoomType = content;
+                        }
+
                     }
                 })
             },

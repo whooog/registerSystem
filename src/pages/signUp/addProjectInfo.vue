@@ -273,7 +273,7 @@
                     let tableForm = [...this.tableForm]
                     let table = tableForm[index-1];
                     for (let key in table){
-                        if (table[key].type == 'uploader' && res[key] != '') {
+                        if (table[key].type == 'uploader' && res[key] != "") {
                             table[key].fileList = [{
                                     url: response[key] || ''
                                 }]
