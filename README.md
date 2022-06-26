@@ -4,3 +4,4 @@
 拉取代码后
 1、执行`yarn`或`npm install`
 2、执行`yarn serve`或`npm run serve`
+2、执行`yarn build`或`npm run build`
