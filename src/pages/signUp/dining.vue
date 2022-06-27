@@ -54,6 +54,7 @@
                         label: '请选择日期',
                         placeholder: '请选择',
                         type: 'time',
+                        time: '',
                         value: '',
                         content: []
                     },
