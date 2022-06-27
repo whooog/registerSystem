@@ -1,6 +1,6 @@
 <template>
 <div class="pioneerGame page">
-    <Header title="" :hasClose="hasClose"></Header>
+    <Header title=""></Header>
     <div class="scroll">
         <div class="iconBox">
             <div class="iconItem" @click="jumpPage('/dining')">用餐</div>
@@ -53,10 +53,10 @@
             }
         },
         mounted() {
-            let hasClose =  this.$route.query.hasClose
-            if (!this.$common.isEmpty(hasClose)) {
-                this.hasClose = JSON.parse(hasClose)
-            }
+            // let hasClose =  this.$route.query.hasClose
+            // if (!this.$common.isEmpty(hasClose)) {
+            //     this.hasClose = JSON.parse(hasClose)
+            // }
             this.getProjectList()
         },
         methods: {

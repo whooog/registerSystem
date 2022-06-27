@@ -42,23 +42,12 @@
     <van-popup v-model="showPicker" position="bottom">
         <!--   选择酒店     -->
         <van-picker
-                v-if="currentInfo.type == 'select'"
+                v-if="currentInfo.type == 'select' || currentInfo.type == 'time'"
                 show-toolbar
                 :columns="currentInfo.content"
                 @confirm="onConfirm"
                 :default-index="currentInfo.defaultIndex"
                 @cancel="showPicker = false"
-        />
-
-        <!--   选择时间     -->
-        <van-datetime-picker
-                v-else-if="currentInfo.type == 'time'"
-                v-model="currentInfo.currentTime"
-                type="date"
-                title="选择年月日"
-                @confirm="onConfirm"
-                :min-date="minDate"
-                :max-date="maxDate"
         />
 
         <!--     选择房型   -->
@@ -126,6 +115,7 @@
                         id: '',
                         time: '',
                         showStatus: false,
+                        content: []
                     },
                     check_out:{
                         label: '退房日期',
@@ -136,6 +126,7 @@
                         id: '',
                         time: '',
                         showStatus: false,
+                        content: []
                     },
                     table: {
                         type: 'table',
@@ -163,8 +154,6 @@
                         showStatus: false,
                     }
                 },
-                minDate: '',
-                maxDate: '',
                 pickerIndex: 0,
                 showPicker: false,
                 currentInfo: {},
@@ -174,8 +163,6 @@
             }
         },
         mounted() {
-            this.minDate = new Date(this.$common.getNowTimeStamp(false))
-            this.maxDate = new Date(2022, 11, 1)
 
         },
         methods: {
@@ -258,6 +245,20 @@
                     })
                 })
             },
+            // 获取可选时间列表
+            getTimeList(){
+                this.$api.getTimeList().then(res => {
+                    console.log(res)
+                    // 格式化数组
+                    if (res.length > 0) {
+                        res.forEach(item => {
+                            item.text = item.datename
+                        })
+                        this.tableForm.check_in["content"] = res
+                        this.tableForm.check_out["content"] = res
+                    }
+                })
+            },
             toggle(index) {
                 this.$refs.checkboxes[index].toggle();
             },
@@ -274,8 +275,8 @@
                     tableForm[pickerIndex].id = value.hotel_id || '';
                     tableForm[pickerIndex].defaultIndex = index;
                 }else {
-                    tableForm[pickerIndex].value = this.timeFormat(value)
-                    tableForm[pickerIndex].time = value.valueOf()
+                    tableForm[pickerIndex].value =  value.text
+                    tableForm[pickerIndex].time = value.datetime
                 }
 
                 // 格式化显示状态
@@ -291,6 +292,7 @@
                if (stayBool) {
                    tableForm.check_in.showStatus = true;
                    tableForm.check_out.showStatus = true;
+                   this.getTimeList();
                    if (timeBool){
                        this.getHotelDetail().then(() => {
                            tableForm.table.showStatus = true;

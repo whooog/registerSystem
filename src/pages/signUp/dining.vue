@@ -25,15 +25,13 @@
     </div>
     <van-popup v-model="showPicker" position="bottom">
         <!--   选择时间     -->
-        <van-datetime-picker
-                v-model="currentInfo.time"
-                type="date"
-                title="选择年月日"
+        <van-picker
+                show-toolbar
+                :columns="currentInfo.content"
                 @confirm="onConfirm"
-                :min-date="minDate"
-                :max-date="maxDate"
+                :default-index="currentInfo.defaultIndex"
+                @cancel="showPicker = false"
         />
-
     </van-popup>
 </div>
 </template>
@@ -56,7 +54,8 @@
                         label: '请选择日期',
                         placeholder: '请选择',
                         type: 'time',
-                        value: ''
+                        value: '',
+                        content: []
                     },
                     breakfast: {
                         label: '早餐',
@@ -80,18 +79,29 @@
                 pickerIndex: 0,
                 currentInfo: {},
 
-                minDate: '',
-                maxDate: '',
-
                 link: ''
             }
         },
         mounted() {
-            this.minDate = new Date(this.$common.getNowTimeStamp(false))
-            this.maxDate = new Date(2022, 11, 1);
+
             this.getJumpLink();
+            this.getTimeList();
         },
         methods: {
+
+            // 获取可选时间列表
+            getTimeList(){
+                this.$api.getTimeList().then(res => {
+                    console.log(res)
+                    // 格式化数组
+                    if (res.length > 0) {
+                        res.forEach(item => {
+                            item.text = item.datename
+                        })
+                        this.tableForm.time["content"] = res
+                    }
+                })
+            },
             getJumpLink(){
                 this.$httpRequest.post('api/Dining/url', {}, 'gameToken').then(res => {
                     this.link = res.data.url;
@@ -111,8 +121,8 @@
             },
             onConfirm(value){
                 let {tableForm, pickerIndex} = this
-                tableForm[pickerIndex].time = this.timeFormat(value)
-                tableForm[pickerIndex].value = value.valueOf()
+                tableForm[pickerIndex].value =  value.datetime
+                tableForm[pickerIndex].time = value.text
                 this.showPicker = false
                 this.$forceUpdate();
             },

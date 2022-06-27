@@ -110,7 +110,7 @@ const routes = [{
     // },
     {
         path: '/',
-        redirect: '/index'
+        redirect: '/home/index'
     },
     {
         path: '*',

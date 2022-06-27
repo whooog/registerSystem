@@ -11,6 +11,15 @@ export default {
                 reject(err)
             })
         })
+    },
+    getTimeList(){
+        return new Promise((resolve, reject) => {
+            httpRequst.post('api/Time.Options/index', {}).then(res => {
+                resolve(res.data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
     }
 }
 

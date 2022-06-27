@@ -360,7 +360,7 @@
         }
         .van-tabs__nav--card {
             border: none;
-            margin: 0 50px !important;
+            margin: 0 30px !important;
         }
         .van-tabs__nav {
             display: flex;
@@ -368,7 +368,7 @@
             justify-content: space-between;
         }
         .van-tab {
-            width: 25%;
+            width: 28%;
             border: 1px solid #d2d2d2;
             color: #333;
             line-height: 26px;

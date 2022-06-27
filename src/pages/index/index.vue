@@ -137,11 +137,12 @@ export default {
                 .van-swipe-item {
                     color: #333;
                     font-size: 20px;
-                    height: 150px;
-                    line-height: 150px;
+                    height: 240px;
                     text-align: center;
                     background: #fff;
+                    width: 100%;
                     .img {
+                        width: 100%;
                         height: 100%;
                     }
                 }
