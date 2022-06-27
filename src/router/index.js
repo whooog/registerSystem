@@ -20,15 +20,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     // console.log(from)
     let path = to.path
-    if ((path == '/pioneerGame' || path == '/home/pioneerGame') && localStorage.get('gameToken') == '') {
-        switch (path) {
-            case "/pioneerGame":
-                path = '/loginPage'
-                break;
-            case "/home/pioneerGame":
-                path = '/home/loginPage'
-                break;
-        }
+    if ((path == '/pioneerGame') && localStorage.get('gameToken') == '') {
+        path = '/loginPage'
         store.commit("changeTabActive",path)
         next({path: path})
     }else if (path == '/entryInfo' && localStorage.get('signUpToken') == ''){

@@ -7,24 +7,24 @@
             </keep-alive>
             <!-- </transition> -->
         </div>
-        <van-tabbar
-            class="tab-bar"
-            v-model="$store.state.home.active"
-            @change="tabChange"
-        >
-            <van-tabbar-item name="/home/index">
-                <span>首页</span>
+<!--        <van-tabbar-->
+<!--            class="tab-bar"-->
+<!--            v-model="$store.state.home.active"-->
+<!--            @change="tabChange"-->
+<!--        >-->
+<!--            <van-tabbar-item name="/home/index">-->
+<!--                <span>首页</span>-->
 
-            </van-tabbar-item>
-            <van-tabbar-item name="/home/newsList">
-                <span>赛事咨询</span>
+<!--            </van-tabbar-item>-->
+<!--            <van-tabbar-item name="/home/newsList">-->
+<!--                <span>赛事咨询</span>-->
 
-            </van-tabbar-item>
-            <van-tabbar-item name="/home/pioneerGame">
-                <span>赛事报名</span>
+<!--            </van-tabbar-item>-->
+<!--            <van-tabbar-item name="/home/pioneerGame">-->
+<!--                <span>赛事报名</span>-->
 
-            </van-tabbar-item>
-        </van-tabbar>
+<!--            </van-tabbar-item>-->
+<!--        </van-tabbar>-->
     </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
         }
     },
     mounted() {
-
+        this.tabChange(this.$store.state.home.active)
     },
     activated(){
 
@@ -63,10 +63,10 @@ export default {
         justify-content: flex-start;
 
         .tab-page{
-            &.cant-tab-page{
-                height: calc(100% - 50px);
-                overflow: hidden;
-            }
+            /*&.cant-tab-page{*/
+            /*    height: calc(100% - 50px);*/
+            /*    overflow: hidden;*/
+            /*}*/
         }
         .tab-bar {
             display: flex;

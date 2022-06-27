@@ -4,16 +4,16 @@
     <div class="scroll">
         <div class="iconBox">
             <div class="iconItem" @click="tableStatus = true">校内用餐</div>
-            <div class="iconItem">校外用餐</div>
+            <div class="iconItem" @click="jumpPage()">校外用餐</div>
         </div>
 
         <div class="table" v-if="tableStatus">
             <div class="tr" v-for="(item,key) in tableForm" :key="key">
                 <div class="td">{{item.label}}</div>
                 <div class="td">
-                    <div class="selectForm" v-if="item.type === 'time'"  @click="selectPicker(key)">{{item.value == '' ? item.placeholder : item.value}}  <van-icon name="arrow-down" /></div>
+                    <div class="selectForm" v-if="item.type === 'time'"  @click="selectPicker(key)">{{item.time == '' ? item.placeholder : item.time}}  <van-icon name="arrow-down" /></div>
                     <div class="stepperBox" v-else>
-                        <van-stepper v-model="item.value" />
+                        <van-stepper v-model="item.value" min="0" />
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                 showPicker: false,
 
                 tableForm: {
-                    date: {
+                    time: {
                         label: '请选择日期',
                         placeholder: '请选择',
                         type: 'time',
@@ -62,33 +62,47 @@
                         label: '早餐',
                         placeholder: '请选择',
                         type: 'stepper',
-                        value: 1,
+                        value: 0,
                     },
-                    breakfast2: {
+                    lunch: {
                         label: '中餐',
                         placeholder: '请选择',
                         type: 'stepper',
-                        value: 1,
+                        value: 0,
                     },
-                    breakfast3: {
+                    dinner: {
                         label: '晚餐',
                         placeholder: '请选择',
                         type: 'stepper',
-                        value: 1,
+                        value: 0,
                     },
                 },
                 pickerIndex: 0,
                 currentInfo: {},
 
                 minDate: '',
-                maxDate: ''
+                maxDate: '',
+
+                link: ''
             }
         },
         mounted() {
             this.minDate = new Date(this.$common.getNowTimeStamp(false))
-            this.maxDate = new Date(2022, 11, 1)
+            this.maxDate = new Date(2022, 11, 1);
+            this.getJumpLink();
         },
         methods: {
+            getJumpLink(){
+                this.$httpRequest.post('api/Dining/url', {}, 'gameToken').then(res => {
+                    this.link = res.data.url;
+
+                })
+            },
+            jumpPage(){
+                if (this.link.length > 0) {
+                    window.location = this.link
+                }
+            },
             selectPicker(index) {
                 let item = this.tableForm[index]
                 this.pickerIndex = index
@@ -97,8 +111,8 @@
             },
             onConfirm(value){
                 let {tableForm, pickerIndex} = this
-                tableForm[pickerIndex].value = this.timeFormat(value)
-                tableForm[pickerIndex].time = value.valueOf()
+                tableForm[pickerIndex].time = this.timeFormat(value)
+                tableForm[pickerIndex].value = value.valueOf()
                 this.showPicker = false
                 this.$forceUpdate();
             },
@@ -109,9 +123,26 @@
                 return year + '年' + month + '月' + day + '日'
             },
             submitBtn(){
-                this.$router.push({
-                    path: '/diningDetail'
+                let { tableForm } = this;
+                if (tableForm.time.value == '') {
+                    this.$toast('请选择日期')
+                    return;
+                }
+                let params = {}
+                for (let key in tableForm){
+                    params[key] = tableForm[key].value
+                }
+                this.$httpRequest.post('api/Dining/add', params, 'gameToken').then(() => {
+                    this.$toast('添加成功')
+
+                    setTimeout(() => {
+                        this.$router.push({
+                            path: '/diningDetail'
+                        })
+                    }, 1000)
+
                 })
+
             }
         }
     }

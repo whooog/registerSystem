@@ -52,4 +52,38 @@ export default {
     },
 
 
+
+}
+
+// 防抖
+export function _debounce(fn, time = 1000){
+    let timer = null;
+    return function () {
+        let args = arguments;
+        let that = this;
+        timer ? clearTimeout(timer) : ''
+        timer = setTimeout( () => {
+            console.log(1111)
+            fn.apply(that, args)
+        }, time)
+    }
+}
+// 节流
+export function throttle(fn, delay = 500) {
+    let deferTimer;
+    let flag = true;
+    console.log(flag)
+    return function () {
+        let that = this;
+        let args = arguments;
+        if (!flag) {
+            return;
+        }
+        flag = false;
+        deferTimer && clearTimeout(deferTimer)
+        deferTimer = setTimeout(function () {
+            flag = true;
+            fn.apply(that, args)
+        }, delay)
+    }
 }

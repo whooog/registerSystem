@@ -2,18 +2,36 @@
 <div class="diningDetail page">
     <Header :hasClose="false"></Header>
     <div class="scroll">
-        <div class="date">5月30日</div>
-        <div class="table">
-            <div class="tr" v-for="(value,key) in tableForm" :key="key">
-                <div class="td">{{value.label}}</div>
-                <div class="td">
-                    <div class="stepperBox">
-                        <div class="value">{{value.value}}</div>
+        <div class="box" v-for="(item,index) in list" :key="index">
+            <div class="date">{{item.mddate}}</div>
+            <div class="table">
+                <div class="tr">
+                    <div class="td">早餐</div>
+                    <div class="td">
+                        <div class="stepperBox">
+                            <div class="value">{{item.breakfast}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tr">
+                    <div class="td">中餐</div>
+                    <div class="td">
+                        <div class="stepperBox">
+                            <div class="value">{{item.lunch}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tr">
+                    <div class="td">晚餐</div>
+                    <div class="td">
+                        <div class="stepperBox">
+                            <div class="value">{{item.dinner}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div style="margin: 80px 30px 25px;">
+        <div class="addNumberBox">
             <van-button round block plain class="addNumber" size="small" @click="$router.back()">+ 添加用餐</van-button>
         </div>
     </div>
@@ -33,34 +51,17 @@
         },
         data(){
             return {
-
-                tableForm: {
-                    breakfast: {
-                        label: '早餐',
-                        placeholder: '请选择',
-                        type: 'stepper',
-                        value: 1,
-                    },
-                    breakfast2: {
-                        label: '中餐',
-                        placeholder: '请选择',
-                        type: 'stepper',
-                        value: 1,
-                    },
-                    breakfast3: {
-                        label: '晚餐',
-                        placeholder: '请选择',
-                        type: 'stepper',
-                        value: 1,
-                    },
-                },
+                list: []
             }
         },
         mounted() {
+            this.getDetail()
         },
         methods: {
-            submitBtn(){
-
+            getDetail(){
+                this.$httpRequest.post('api/Dining/index', {}, 'gameToken').then(res => {
+                    this.list = res.data.data;
+                })
             }
         }
     }
@@ -68,9 +69,20 @@
 
 <style scoped lang="scss">
 .diningDetail {
+    .box {
+        margin-bottom: 60px;
+        &:last-child {
+            margin-bottom: 0px;
+        }
+    }
+    .date {
+        text-align: center;
+        font-size: 28px;
+        line-height: 75px;
+        border-top: 1px solid #d2d2d2;
+    }
     .table {
         border-top: 2px solid #d2d2d2;
-        margin-top: 90px;
         .tr {
             padding: 0 30px;
             height: 80px;
@@ -126,9 +138,13 @@
             }
         }
     }
-    .addNumber {
-        border: 6px solid #0035fc !important;
+    .addNumberBox {
+        margin: 90px 30px 25px;
+        .addNumber {
+            border: 6px solid #0035fc !important;
+        }
     }
+
     .footer {
         .van-button {
             background: #87c785;

@@ -87,7 +87,7 @@
                 pageType: 'add',
                 title: '新增参赛项目',
                 tabIndex: 0,
-                tabList: ['项目','指导老师','项目负责人','项目成员'],
+                tabList: ['项目','项目负责人','项目成员'],
                 /**
                  * tableForm
                  * type-  表单类型 text-文本框 select-选择框 phone-手机号 time-选择时间
@@ -122,50 +122,6 @@
         methods: {
             initTable(){
                 this.tableForm = [
-                    {
-                        name:{
-                            label: '姓名',
-                            placeholder: '请输入姓名',
-                            type: 'text',
-                            defaultIndex: 0,
-                            value: ''
-                        },
-                        phone: {
-                            label: '手机号',
-                            placeholder: '请输入手机号',
-                            type: 'phone',
-                            defaultIndex: 0,
-                            value: ''
-                        },
-                        id_card: {
-                            label: '身份证号、护照号',
-                            placeholder: '请输入身份证号、护照号',
-                            type: 'text',
-                            defaultIndex: 0,
-                            value: ''
-                        },
-                        role: {
-                            label: '职位',
-                            placeholder: '请输入职位',
-                            type: 'text',
-                            defaultIndex: 0,
-                            value: ''
-                        },
-                        sex: {
-                            label: '性别',
-                            placeholder: '请选择性别',
-                            type: 'select',
-                            defaultIndex: 0,
-                            value: '',
-                            content: ['男', '女']
-                        },
-
-                        img: {
-                            type: 'uploader',
-                            value: '',
-                            fileList: []
-                        }
-                    },
                     {
                         name:{
                             label: '姓名',
@@ -259,7 +215,6 @@
                 if (this.pageType == 'edit') {
                     this.getDetail(1)
                     this.getDetail(2)
-                    this.getDetail(3)
                 }
             },
 
@@ -383,11 +338,11 @@
                  * 5 项目成员
                  * */
                 switch (Number(tabIndex)) {
+                        // case 1:
+                        //     return 4;
                         case 1:
-                            return 4;
-                        case 2:
                             return 3;
-                        case 3:
+                        case 2:
                             return 5;
 
                 }
@@ -405,6 +360,7 @@
         }
         .van-tabs__nav--card {
             border: none;
+            margin: 0 50px !important;
         }
         .van-tabs__nav {
             display: flex;
@@ -412,7 +368,7 @@
             justify-content: space-between;
         }
         .van-tab {
-            width: 22%;
+            width: 25%;
             border: 1px solid #d2d2d2;
             color: #333;
             line-height: 26px;

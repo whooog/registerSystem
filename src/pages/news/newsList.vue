@@ -2,7 +2,7 @@
     <div class="newsList page">
         <Header :hasClose="false" title="赛事咨询" :main-color="false"></Header>
         <div class="scroll">
-           <div class="advisory">
+            <div class="advisory">
                <div class="subTitle">
                    新闻资讯
                    <div class="more" @click="toAdvisory">more <van-icon name="down" class="icon"/>
@@ -21,8 +21,7 @@
                     </div>
                 </div>
             </div>
-
-            </div>
+        </div>
     </div>
 </template>
 
@@ -86,26 +85,27 @@
         background: #0035fc;
         color: #fff;
         padding-top: 10px;
-        .subTitle {
-            line-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 25px;
-            font-weight: bold;
-            padding: 0 30px;
-            .more {
-                color: #333;
-                .icon {
-                    font-size: 16px;
-                    transform: rotate(270deg);
+
+        .advisoryList {
+            padding: 0 15px;
+            .subTitle {
+                line-height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 25px;
+                font-weight: bold;
+                padding: 0 30px;
+                .more {
+                    color: #333;
+                    .icon {
+                        font-size: 16px;
+                        transform: rotate(270deg);
+                    }
+
                 }
 
             }
-
-        }
-        .advisoryList {
-            padding: 0 15px;
             .advisoryItem {
                 padding: 15px 15px;
                 display: flex;
@@ -123,7 +123,23 @@
         }
         .guide {
             .subTitle {
+                line-height: 80px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 25px;
+                font-weight: bold;
+                padding: 0 30px;
                 margin-top: 110px;
+                .more {
+                    color: #333;
+                    .icon {
+                        font-size: 16px;
+                        transform: rotate(270deg);
+                    }
+
+                }
+
             }
             .guideList {
                 padding: 20px 15px;
