@@ -137,7 +137,7 @@ export default {
                 .van-swipe-item {
                     color: #333;
                     font-size: 20px;
-                    height: 240px;
+                    height: 120px;
                     text-align: center;
                     background: #fff;
                     width: 100%;

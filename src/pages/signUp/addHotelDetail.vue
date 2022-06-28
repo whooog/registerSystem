@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        <div class="tips">提醒：一经确认不可修改，有疑问请电话联系</div>
+        <div class="tips" v-if="tips!=''">提醒：{{tips}}</div>
     </div>
     <div class="footer">
         <van-button block native-type="submit" @click="submitForm">提交</van-button>
@@ -159,11 +159,13 @@
                 currentInfo: {},
 
                 // 房型列表
-                hotelRoomType: []
+                hotelRoomType: [],
+
+                tips: ''
             }
         },
         mounted() {
-
+            this.getTipsContent()
         },
         methods: {
             //酒店列表
@@ -186,6 +188,13 @@
                        reject()
                    })
                })
+            },
+            // 获取提醒内容弄
+            getTipsContent(){
+                this.$httpRequest.post('api/Hotel.Stock/tixing', {}, 'gameToken').then(res => {
+                    this.tips = res.data.msg
+                }).catch(() => {
+                })
             },
             // 获取酒店列表详情
             getHotelDetail(){
