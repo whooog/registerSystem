@@ -1,6 +1,5 @@
 <template>
     <div class="index-section page">
-        <Header title="第八届互联网+大学生创新创业大赛" :hasClose="false" :main-color="false"></Header>
         <div class="scroll">
             <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" v-if="detail.banner && detail.banner.length > 0">
                 <van-swipe-item v-for="(item,index) in detail.banner" :key="index">
@@ -49,10 +48,9 @@
 </template>
 
 <script>
-import Header from "../../components/header.vue"
 export default {
     components: {
-        Header
+
     },
     data() {
         return {
@@ -130,7 +128,7 @@ export default {
 <style lang="scss">
     .index-section {
         .scroll {
-            background-color: #0035fc;
+            background-image: linear-gradient(#002A9E 45%, #31A1F6);
             overflow: hidden;
             .my-swipe {
                 margin: 25px 30px;
@@ -152,23 +150,29 @@ export default {
                     display: flex;
                     align-items: center;
                     justify-content: space-between;
-                    padding: 0 40px 0 80px;
+                    padding: 0 30px 0 60px;
                     width: 88%;
                     margin: 0 auto 25px;
-                    height: 80px;
-                    border-radius: 40px;
-                    background: #fff;
+                    height: 70px;
+                    border-radius: 25px;
                     font-size: 24px;
+                    background: #6955e8;
+                    background: linear-gradient(90deg,#6955e8 30%, #4e7ae3);
+                    box-shadow: 5px 1px 6px 0px #6E6E6E;
+
                     .btn {
-                        background: #15cd63;
                         /*color: #fff;*/
-                        width: 140px;
-                        height: 40px;
+                        width: 180px;
+                        height: 52px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        font-size: 20px;
-                        /*border-radius: 20px;*/
+                        font-size: 26px;
+                        border-radius: 25px;
+                        font-weight: bold;
+                        color: #fff;
+                        background: linear-gradient(148deg, #012a9e 50%, #2284de 91%);
+                        box-shadow: 0px -1px 3px 0px #f6f6f6;
                     }
                 }
             }

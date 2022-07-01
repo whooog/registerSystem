@@ -1,6 +1,6 @@
 <template>
     <div class="loginPage page">
-        <Header :hasClose="false" :main-color="false"></Header>
+        <Header :hasClose="false" :main-color="false" title="大学生创新创业大赛注册"></Header>
         <div class="scroll">
             <div class="inputBox">
                 <div class="input">
