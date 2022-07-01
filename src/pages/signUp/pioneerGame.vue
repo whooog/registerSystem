@@ -3,9 +3,15 @@
     <Header title=""></Header>
     <div class="scroll">
         <div class="iconBox">
-            <div class="iconItem" @click="jumpPage('/dining')">用餐</div>
-            <div class="iconItem" @click="jumpPage('/addHotel')">住宿ICON</div>
-            <div class="iconItem" @click="jumpPage('/addTrafficInfo')">交通ICON</div>
+            <div class="iconItem" @click="jumpPage('/dining')">
+                <img src="@/assets/images/tabIcon1.png" alt="">
+            </div>
+            <div class="iconItem" @click="jumpPage('/addHotel')">
+                <img src="@/assets/images/tabIcon2.png" alt="">
+            </div>
+            <div class="iconItem" @click="jumpPage('/addTrafficInfo')">
+                <img src="@/assets/images/tabIcon3.png" alt="">
+            </div>
         </div>
         <div class="btnGroup">
             <van-button round class="btn" size="small" block @click="jumpPage(item.path, item.params)" v-for="(item,index) in btnList" :key="index">{{item.text}}</van-button>
@@ -106,12 +112,15 @@
             .iconItem {
                 width: 29%;
                 height: 180px;
-                background: #0035fc;
                 color: #fff;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 border-radius: 60px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
         .btnGroup {

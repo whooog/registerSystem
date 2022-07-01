@@ -216,15 +216,12 @@
                     }
                     .selectForm {
                         width: 100%;
-                        display: flex;
-                        align-items: center;
-                        justify-content: right;
+                        text-align: right;
                     }
                 }
                 .stepperBox {
                     width: 100%;
-                    display: flex;
-                    justify-content: right;
+                    text-align: right;
                 }
             }
         }

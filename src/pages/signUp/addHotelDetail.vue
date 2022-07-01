@@ -437,8 +437,7 @@
                         }
                         .stepperBox {
                             width: 100%;
-                            display: flex;
-                            justify-content: right;
+                            text-align: right;
                         }
                     }
 

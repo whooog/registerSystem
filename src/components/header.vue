@@ -55,10 +55,6 @@ export default {
         .header-bg{
             width: 100%;
             height: 100%;
-            /*background-image: url(../assets/images/header-bg.png);*/
-            /*background-repeat: no-repeat;*/
-            /*background-position: left top;*/
-            /*background-size: 100% auto;*/
             display: flex;
             justify-content: center;
             align-items: center;
