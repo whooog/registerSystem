@@ -90,11 +90,6 @@ const routes = [{
         path: '/addHotelDetail',
         component: resolve => require(['@/pages/signUp/addHotelDetail'], resolve)
     },
-    // 住宿详情
-    {
-        path: '/hotelDetail',
-        component: resolve => require(['@/pages/signUp/hotelDetail'], resolve)
-    },
     // 用餐
     {
         path: '/dining',

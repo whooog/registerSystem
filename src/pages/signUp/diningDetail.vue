@@ -1,6 +1,6 @@
 <template>
 <div class="diningDetail page">
-    <Header :hasClose="false"></Header>
+    <Header></Header>
     <div class="scroll">
         <div class="box" v-for="(item,index) in list" :key="index">
             <div class="date">{{item.mddate}}</div>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="addNumberBox">
-            <van-button round block plain class="addNumber" size="small" @click="$router.back()">+ 添加用餐</van-button>
+            <van-button round block plain class="addNumber" size="small" @click="$router.push({path: '/dining'})">+ 添加用餐</van-button>
         </div>
     </div>
     <div class="footer">
@@ -130,6 +130,7 @@
                         line-height: 43px;
                         border: 1px solid #ddd;
                         text-align: center;
+                        display: inline-block;
                     }
                 }
             }

@@ -147,9 +147,7 @@
                     this.$toast('添加成功')
 
                     setTimeout(() => {
-                        this.$router.push({
-                            path: '/diningDetail'
-                        })
+                        this.$router.back()
                     }, 1000)
 
                 })

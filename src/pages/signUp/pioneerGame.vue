@@ -3,10 +3,10 @@
     <Header title=""></Header>
     <div class="scroll">
         <div class="iconBox">
-            <div class="iconItem" @click="jumpPage('/dining')">
+            <div class="iconItem" @click="jumpPage('/diningDetail')">
                 <img src="@/assets/images/tabIcon1.png" alt="">
             </div>
-            <div class="iconItem" @click="jumpPage('/addHotel')">
+            <div class="iconItem" @click="jumpPage('/addHotelDetail')">
                 <img src="@/assets/images/tabIcon2.png" alt="">
             </div>
             <div class="iconItem" @click="jumpPage('/addTrafficInfo')">
