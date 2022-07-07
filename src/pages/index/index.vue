@@ -6,17 +6,17 @@
                     <div class="img" :style="{'background':' url('+item.url+') no-repeat center center / cover'}"></div>
                 </van-swipe-item>
             </van-swipe>
-            <div class="btnGroup">
-                <div class="btnContent">
-                    互联网+大学生创新创业大赛
-                    <div class="btn" @click="gotoChild(1)">立即报名</div>
-                </div>
-                <div class="btnContent">
-                    对接洽谈活动投资机构人员报名
-                    <div class="btn" @click="gotoChild(2)">立即报名</div>
-                </div>
-            </div>
-            <div class="advisory">
+<!--            <div class="btnGroup">-->
+<!--                <div class="btnContent">-->
+<!--                    互联网+大学生创新创业大赛-->
+<!--                    <div class="btn" @click="gotoChild(1)">立即报名</div>-->
+<!--                </div>-->
+<!--                <div class="btnContent">-->
+<!--                    对接洽谈活动投资机构人员报名-->
+<!--                    <div class="btn" @click="gotoChild(2)">立即报名</div>-->
+<!--                </div>-->
+<!--            </div>-->
+            <div class="advisory" v-if="newslist.length>0">
                 <div class="subTitle">
                     新闻资讯
                     <div class="more" @click="toAdvisory">more <van-icon name="down" class="icon"/>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-            <div class="guide">
+            <div class="guide" v-if="eventGuideList.length>0">
                 <div class="subTitle">赛事指南</div>
                 <div class="guideList">
                     <div class="guideItem content" @click="jumpPage(item.eventguide_id, 2)" v-for="(item,index) in eventGuideList" :key="index+'b'">
